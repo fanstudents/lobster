@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getCalendarClient } from '@/lib/google-calendar';
 
+// In-memory cache — 5 min TTL
+let cachedResult = null;
+let cacheExpiry = 0;
+const CACHE_TTL = 5 * 60 * 1000;
+
 // Slot config: weekdays only, 60-min slots
 // Morning block: 09:00–17:00  (slots: 09, 10, 11, 12, 13, 14, 15, 16)
 // Evening block: 21:00–24:00  (slots: 21, 22, 23)
@@ -27,6 +32,11 @@ function taipeiToUTC(dateStr, hour) {
 
 export async function GET() {
   try {
+    // Return cached result if fresh
+    if (cachedResult && Date.now() < cacheExpiry) {
+      return NextResponse.json(cachedResult);
+    }
+
     const gcal = getCalendarClient();
 
     // Date range: from tomorrow, 30 weekdays out
@@ -117,11 +127,17 @@ export async function GET() {
       };
     });
 
-    return NextResponse.json({
+    const response = {
       calendarConnected: !!gcal,
       timezone: TIMEZONE,
       dates: result,
-    });
+    };
+
+    // Cache the result
+    cachedResult = response;
+    cacheExpiry = Date.now() + CACHE_TTL;
+
+    return NextResponse.json(response);
   } catch (err) {
     console.error('calendar-availability error:', err);
     return NextResponse.json({ error: err.message }, { status: 500 });
