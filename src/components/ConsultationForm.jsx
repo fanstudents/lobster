@@ -37,7 +37,7 @@ export default function ConsultationForm() {
 
   useEffect(() => {
     if (expanded) {
-      fetch('/api/dates')
+      fetch('/api/calendar-availability')
         .then((res) => res.json())
         .then((data) => {
           if (data.dates) {

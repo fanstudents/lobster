@@ -59,7 +59,7 @@ export default function AdminPage() {
 
   async function fetchDates() {
     try {
-      const res = await fetch('/api/dates');
+      const res = await fetch('/api/calendar-availability');
       const data = await res.json();
       setDateData(data);
       setDefaultCapacity(data.defaultCapacity || 3);
@@ -224,6 +224,16 @@ export default function AdminPage() {
             <h3>每日預約名額控管</h3>
             <p className={styles.webhookDesc}>
               管理企業諮詢的可預約日期與每日名額上限。超過上限的日期將自動從前台隱藏。
+              {dateData?.calendarConnected && (
+                <span style={{ display: 'block', marginTop: '0.5rem', color: 'hsl(150, 55%, 55%)' }}>
+                  ✅ Google 日曆已連接 — 行程滿檔的日期會自動標記
+                </span>
+              )}
+              {dateData && !dateData.calendarConnected && (
+                <span style={{ display: 'block', marginTop: '0.5rem', color: '#71717a' }}>
+                  ⚠️ Google 日曆未連接 — 設定 .env.local 中的 GOOGLE_SERVICE_ACCOUNT_KEY 和 GOOGLE_CALENDAR_ID
+                </span>
+              )}
             </p>
 
             <div className={styles.dateDefaultRow}>
@@ -256,7 +266,9 @@ export default function AdminPage() {
                     <span className={styles.dateBooked}>{d.booked}</span>
                     <span className={styles.dateCap}>{d.capacity}</span>
                     <span>
-                      {d.full ? (
+                      {d.calendarBusy ? (
+                        <span className={styles.dateStatusFull}>📅 日曆滿</span>
+                      ) : d.full ? (
                         <span className={styles.dateStatusFull}>已額滿</span>
                       ) : (
                         <span className={styles.dateStatusOpen}>剩 {d.available} 名</span>
