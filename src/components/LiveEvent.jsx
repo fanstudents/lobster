@@ -13,7 +13,7 @@ export default function LiveEvent() {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    const target = new Date('2026-04-14T21:00:00+08:00');
+    const target = new Date('2026-04-11T20:00:00+08:00');
 
     const tick = () => {
       const now = new Date();
@@ -72,7 +72,7 @@ export default function LiveEvent() {
       email: form.email,
       phone: form.phone,
       company: form.company,
-      event_date: '2026-04-14',
+      event_date: '2026-04-11',
     };
 
     try {
@@ -103,7 +103,7 @@ export default function LiveEvent() {
               <span className="text-gradient">直播見真章</span>
             </h2>
             <p className={styles.desc}>
-              4/14（一）晚上 9:00–10:00，1 小時線上直播。
+              4/11（五）晚上 8:00–9:00，1 小時線上直播。
               不講概念，<strong>直接展示龍蝦實戰案例</strong>。
             </p>
 
@@ -151,7 +151,7 @@ export default function LiveEvent() {
                   <h3 className={styles.formTitle}>報名成功！</h3>
                   <p className={styles.successText}>
                     我們會在直播前發送提醒通知到你的信箱。
-                    <br />4/14（一）21:00 線上見！
+                    <br />4/11（五）20:00 線上見！
                   </p>
                 </div>
               </div>

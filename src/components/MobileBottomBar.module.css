@@ -82,6 +82,25 @@
   50% { opacity: 0.5; transform: scale(0.8); }
 }
 
+.liveText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.liveText strong {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.liveText small {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
 .lineItem {
   color: hsl(145, 63%, 38%);
 }
