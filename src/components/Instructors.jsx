@@ -14,7 +14,7 @@ const team = [
   },
   {
     name: 'Cablate',
-    role: '龍蝦大神',
+    role: '龍蝦大神 + Claude 專家',
     photo: '/team-cablate.jpg',
     bio: '最早開始研究並自製龍蝦的技術派專家。精通 Cloud、Code、Skill，以及各種場景應用，是龍蝦技術領域的先驅。',
     highlights: ['龍蝦先驅', 'Cloud · Code · Skill', '場景應用'],
