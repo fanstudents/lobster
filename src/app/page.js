@@ -14,6 +14,7 @@ import Enterprise from '@/components/Enterprise';
 import EnterpriseSOP from '@/components/EnterpriseSOP';
 import ParallaxDivider from '@/components/ParallaxDivider';
 import StickyBar from '@/components/StickyBar';
+import MobileBottomBar from '@/components/MobileBottomBar';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -38,6 +39,7 @@ export default function Home() {
         <EnterpriseSOP />
       </main>
       <StickyBar />
+      <MobileBottomBar />
       <Footer />
     </>
   );

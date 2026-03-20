@@ -169,6 +169,7 @@ export default function ConsultationForm() {
   const [expanded, setExpanded] = useState(false);
   const [calData, setCalData] = useState(null);
   const [loadingCal, setLoadingCal] = useState(false);
+  const [skipDate, setSkipDate] = useState(false);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -232,9 +233,9 @@ export default function ConsultationForm() {
       return;
     }
 
-    if (!form.preferredDate || !form.preferredSlot) {
+    if (!skipDate && (!form.preferredDate || !form.preferredSlot)) {
       setStatus('error');
-      setErrorMsg('請選擇諮詢日期與時段');
+      setErrorMsg('請選擇諮詢日期與時段，或選擇「請主動聯繫」');
       return;
     }
 
@@ -268,12 +269,35 @@ export default function ConsultationForm() {
     return (
       <div className={styles.successCard}>
         <div className={styles.successIcon}>
-          <Check size={24} />
+          <Check size={28} />
         </div>
-        <h4>預約成功</h4>
-        <p>
-          已為您預留 {formatDateShort(form.preferredDate)} {form.preferredSlot} 的諮詢時段。
-          <br />我們會在 1 個工作天內寄出確認信。
+        <h4>🎉 提交成功！</h4>
+        {skipDate ? (
+          <p>
+            感謝您的諮詢申請！<br />
+            我們會在 1 個工作天內主動與您聯繫，安排最適合的時間。
+          </p>
+        ) : (
+          <p>
+            已為您預留 {formatDateShort(form.preferredDate)} {form.preferredSlot} 的諮詢時段。
+            <br />我們會在 1 個工作天內寄出確認信。
+          </p>
+        )}
+        <a
+          href="https://lin.ee/7ZiyWDS"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.lineLink}
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/LINE_New_App_Icon_%282020-12%29.png/500px-LINE_New_App_Icon_%282020-12%29.png"
+            alt="LINE"
+            className={styles.lineIcon}
+          />
+          <span>加入官方 LINE 帳號</span>
+        </a>
+        <p className={styles.successHint}>
+          若有任何問題，歡迎先加入我們的官方 LINE 帳號，<br />將有專人為您服務 ✨
         </p>
       </div>
     );
@@ -299,30 +323,51 @@ export default function ConsultationForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      {/* ===== Step 1: Pick a Date ===== */}
-      <div className={styles.field}>
-        <label className={styles.label}>
-          <CalendarDays size={13} style={{ marginRight: 4 }} />
-          選擇諮詢日期 *
-          {form.preferredDate && (
-            <span className={styles.selectedDateLabel}>
-              — {formatDateShort(form.preferredDate)}
-            </span>
-          )}
-        </label>
-        {loadingCal ? (
-          <div className={styles.calendarLoading}>
-            <Loader2 size={18} className={styles.spinner} />
-            <span>載入可預約時段中…</span>
-          </div>
-        ) : (
-          <CalendarPicker
-            dateMap={dateMap}
-            selectedDate={form.preferredDate}
-            onSelectDate={handleDateSelect}
-          />
-        )}
+      {/* ===== Skip Date Toggle ===== */}
+      <div className={styles.skipDateRow}>
+        <button
+          type="button"
+          className={`${styles.skipDateBtn} ${!skipDate ? styles.skipDateActive : ''}`}
+          onClick={() => { setSkipDate(false); }}
+        >
+          <CalendarDays size={14} />
+          選擇日期時段
+        </button>
+        <button
+          type="button"
+          className={`${styles.skipDateBtn} ${skipDate ? styles.skipDateActive : ''}`}
+          onClick={() => { setSkipDate(true); setForm(prev => ({ ...prev, preferredDate: '', preferredSlot: '' })); }}
+        >
+          📞 請主動跟我聯繫
+        </button>
       </div>
+
+      {/* ===== Step 1: Pick a Date (only if not skipping) ===== */}
+      {!skipDate && (
+        <div className={styles.field}>
+          <label className={styles.label}>
+            <CalendarDays size={13} style={{ marginRight: 4 }} />
+            選擇諮詢日期
+            {form.preferredDate && (
+              <span className={styles.selectedDateLabel}>
+                — {formatDateShort(form.preferredDate)}
+              </span>
+            )}
+          </label>
+          {loadingCal ? (
+            <div className={styles.calendarLoading}>
+              <Loader2 size={18} className={styles.spinner} />
+              <span>載入可預約時段中…</span>
+            </div>
+          ) : (
+            <CalendarPicker
+              dateMap={dateMap}
+              selectedDate={form.preferredDate}
+              onSelectDate={handleDateSelect}
+            />
+          )}
+        </div>
+      )}
 
       {/* ===== Step 2: Pick a Time Slot ===== */}
       {form.preferredDate && selectedDateSlots && (
@@ -344,8 +389,8 @@ export default function ConsultationForm() {
         </div>
       )}
 
-      {/* ===== Step 3: Personal Info (shown after time slot selected) ===== */}
-      {form.preferredSlot && (
+      {/* ===== Step 3: Personal Info (shown after slot selected OR skip date) ===== */}
+      {(form.preferredSlot || skipDate) && (
         <>
           <div className={styles.row}>
             <div className={styles.field}>

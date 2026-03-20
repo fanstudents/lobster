@@ -19,8 +19,8 @@ export default function Navbar() {
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.logoMain}>龍蝦工作流</span>
-          <span className={styles.logoSub}>AI 自動化企業導入</span>
+          <span className={styles.logoMain}>龍蝦 AI 工作流</span>
+          <span className={styles.logoSub}>讓你擁有一隻專屬龍蝦</span>
         </Link>
 
         <button
