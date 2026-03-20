@@ -90,6 +90,27 @@
   border-radius: var(--radius-full);
 }
 
+.threadsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: hsl(0, 0%, 15%);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid hsl(0, 0%, 85%);
+  transition: all 0.2s ease;
+}
+
+.threadsLink:hover {
+  background: hsl(0, 0%, 10%);
+  color: white;
+  border-color: hsl(0, 0%, 10%);
+}
+
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
