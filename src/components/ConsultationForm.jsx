@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Send, Check, AlertCircle, Loader2, CalendarDays, ArrowRight } from 'lucide-react';
 import styles from './ConsultationForm.module.css';
 
@@ -12,8 +12,18 @@ const teamSizeOptions = [
   '100 人以上',
 ];
 
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  const m = d.getMonth() + 1;
+  const day = d.getDate();
+  const w = weekdays[d.getDay()];
+  return `${m}/${day}（${w}）`;
+}
+
 export default function ConsultationForm() {
   const [expanded, setExpanded] = useState(false);
+  const [availableDates, setAvailableDates] = useState([]);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -24,6 +34,19 @@ export default function ConsultationForm() {
   });
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    if (expanded) {
+      fetch('/api/dates')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.dates) {
+            setAvailableDates(data.dates.filter((d) => !d.full));
+          }
+        })
+        .catch((err) => console.error('Failed to load dates:', err));
+    }
+  }, [expanded]);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -47,6 +70,7 @@ export default function ConsultationForm() {
     }
 
     const record = {
+      type: 'enterprise_consult',
       name: form.name,
       email: form.email,
       phone: form.phone,
@@ -193,15 +217,20 @@ export default function ConsultationForm() {
             <CalendarDays size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} />
             希望諮詢日期
           </label>
-          <input
+          <select
             id="consult-date"
-            type="date"
             name="preferredDate"
             value={form.preferredDate}
             onChange={handleChange}
-            className={styles.input}
-            min={new Date().toISOString().split('T')[0]}
-          />
+            className={styles.select}
+          >
+            <option value="">不指定日期</option>
+            {availableDates.map((d) => (
+              <option key={d.date} value={d.date}>
+                {formatDate(d.date)}（剩 {d.available} 名額）
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

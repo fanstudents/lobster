@@ -21,7 +21,7 @@ export default function StickyBar() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.info}>
           <span className={styles.dot} />
-          <span className={styles.label}>AI 龍蝦課</span>
+          <span className={styles.label}>龍蝦工作流</span>
           <span className={styles.sub}>免費直播講座 · 4/14 報名中</span>
         </div>
         <a href="#live" className={`btn btn-accent ${styles.cta}`}>

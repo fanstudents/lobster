@@ -7,7 +7,7 @@ export default function Footer() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <div className={styles.logo}>AI 龍蝦課</div>
+            <div className={styles.logo}>龍蝦工作流</div>
             <p className={styles.brandDesc}>
               用 AI 幫你打造可落地的工作流系統
             </p>
@@ -30,7 +30,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <p>© 2025 AI 龍蝦課. All rights reserved.</p>
+          <p>© 2025 龍蝦工作流. All rights reserved.</p>
         </div>
       </div>
     </footer>

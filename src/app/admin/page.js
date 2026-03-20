@@ -10,6 +10,12 @@ const TYPE_LABELS = {
   unknown: '其他',
 };
 
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  return `${d.getMonth() + 1}/${d.getDate()}（${weekdays[d.getDay()]}）`;
+}
+
 export default function AdminPage() {
   const [tab, setTab] = useState('registrations');
   const [registrations, setRegistrations] = useState([]);
@@ -18,9 +24,15 @@ export default function AdminPage() {
   const [webhookSaved, setWebhookSaved] = useState(false);
   const [filter, setFilter] = useState('all');
 
+  // Date management
+  const [dateData, setDateData] = useState(null);
+  const [defaultCapacity, setDefaultCapacity] = useState(3);
+  const [dateSaved, setDateSaved] = useState(false);
+
   useEffect(() => {
     fetchRegistrations();
     fetchWebhookConfig();
+    fetchDates();
   }, []);
 
   async function fetchRegistrations() {
@@ -45,6 +57,17 @@ export default function AdminPage() {
     }
   }
 
+  async function fetchDates() {
+    try {
+      const res = await fetch('/api/dates');
+      const data = await res.json();
+      setDateData(data);
+      setDefaultCapacity(data.defaultCapacity || 3);
+    } catch (err) {
+      console.error('Failed to fetch dates:', err);
+    }
+  }
+
   async function saveWebhookConfig() {
     try {
       await fetch('/api/webhook-config', {
@@ -56,6 +79,34 @@ export default function AdminPage() {
       setTimeout(() => setWebhookSaved(false), 3000);
     } catch (err) {
       console.error('Failed to save webhook config:', err);
+    }
+  }
+
+  async function saveDefaultCapacity() {
+    try {
+      await fetch('/api/dates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ defaultCapacity }),
+      });
+      setDateSaved(true);
+      setTimeout(() => setDateSaved(false), 3000);
+      fetchDates();
+    } catch (err) {
+      console.error('Failed to save default capacity:', err);
+    }
+  }
+
+  async function updateDateOverride(dateStr, newCapacity) {
+    try {
+      await fetch('/api/dates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ overrides: { [dateStr]: newCapacity } }),
+      });
+      fetchDates();
+    } catch (err) {
+      console.error('Failed to update date override:', err);
     }
   }
 
@@ -84,6 +135,12 @@ export default function AdminPage() {
           <span className={styles.tabBadge}>{registrations.length}</span>
         </button>
         <button
+          className={`${styles.tab} ${tab === 'dates' ? styles.tabActive : ''}`}
+          onClick={() => setTab('dates')}
+        >
+          📅 日期管理
+        </button>
+        <button
           className={`${styles.tab} ${tab === 'webhook' ? styles.tabActive : ''}`}
           onClick={() => setTab('webhook')}
         >
@@ -91,6 +148,7 @@ export default function AdminPage() {
         </button>
       </div>
 
+      {/* ===== Registrations ===== */}
       {tab === 'registrations' && (
         <div className={styles.panel}>
           <div className={styles.filterBar}>
@@ -159,6 +217,84 @@ export default function AdminPage() {
         </div>
       )}
 
+      {/* ===== Date Management ===== */}
+      {tab === 'dates' && (
+        <div className={styles.panel}>
+          <div className={styles.webhookCard}>
+            <h3>每日預約名額控管</h3>
+            <p className={styles.webhookDesc}>
+              管理企業諮詢的可預約日期與每日名額上限。超過上限的日期將自動從前台隱藏。
+            </p>
+
+            <div className={styles.dateDefaultRow}>
+              <label>預設每日名額上限：</label>
+              <input
+                type="number"
+                min="0"
+                max="99"
+                value={defaultCapacity}
+                onChange={(e) => setDefaultCapacity(parseInt(e.target.value, 10) || 0)}
+                className={styles.dateInput}
+              />
+              <button onClick={saveDefaultCapacity} className={styles.saveBtn}>
+                {dateSaved ? '✅ 已儲存' : '💾 儲存'}
+              </button>
+            </div>
+
+            {dateData && dateData.dates && (
+              <div className={styles.dateGrid}>
+                <div className={styles.dateGridHeader}>
+                  <span>日期</span>
+                  <span>已預約</span>
+                  <span>上限</span>
+                  <span>狀態</span>
+                  <span>調整</span>
+                </div>
+                {dateData.dates.map((d) => (
+                  <div key={d.date} className={`${styles.dateRow} ${d.full ? styles.dateRowFull : ''}`}>
+                    <span className={styles.dateLabel}>{formatDate(d.date)}</span>
+                    <span className={styles.dateBooked}>{d.booked}</span>
+                    <span className={styles.dateCap}>{d.capacity}</span>
+                    <span>
+                      {d.full ? (
+                        <span className={styles.dateStatusFull}>已額滿</span>
+                      ) : (
+                        <span className={styles.dateStatusOpen}>剩 {d.available} 名</span>
+                      )}
+                    </span>
+                    <span className={styles.dateActions}>
+                      <button
+                        className={styles.dateActionBtn}
+                        onClick={() => updateDateOverride(d.date, d.capacity - 1)}
+                        disabled={d.capacity <= 0}
+                        title="減少名額"
+                      >
+                        −
+                      </button>
+                      <button
+                        className={styles.dateActionBtn}
+                        onClick={() => updateDateOverride(d.date, d.capacity + 1)}
+                        title="增加名額"
+                      >
+                        +
+                      </button>
+                      <button
+                        className={styles.dateActionBtn}
+                        onClick={() => updateDateOverride(d.date, 0)}
+                        title="關閉此日"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ===== Webhook ===== */}
       {tab === 'webhook' && (
         <div className={styles.panel}>
           <div className={styles.webhookCard}>
@@ -194,7 +330,7 @@ export default function AdminPage() {
                 event: 'new_registration',
                 data: {
                   id: 'abc123',
-                  type: 'free_lecture | course_register | enterprise_consult',
+                  type: 'free_lecture | enterprise_consult',
                   name: '姓名',
                   email: 'email@example.com',
                   phone: '0912-345-678',
