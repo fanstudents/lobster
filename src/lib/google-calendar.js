@@ -86,9 +86,15 @@ export async function createCalendarEvent({ date, slot, name, email, company, ph
     },
     // Color: Tomato (11) to make consultation events stand out
     colorId: '11',
+    // Add both parties as attendees → Google sends calendar invite emails
+    attendees: [
+      { email: gcal.calendarId, responseStatus: 'accepted' },  // 你（日曆擁有者）
+      { email, displayName: name },                            // 預約者
+    ],
     reminders: {
       useDefault: false,
       overrides: [
+        { method: 'email', minutes: 60 },
         { method: 'popup', minutes: 30 },
         { method: 'popup', minutes: 10 },
       ],
@@ -99,6 +105,7 @@ export async function createCalendarEvent({ date, slot, name, email, company, ph
     const res = await gcal.calendar.events.insert({
       calendarId: gcal.calendarId,
       requestBody: event,
+      sendUpdates: 'all',  // 發送 email 通知給所有 attendees
     });
     console.log('Created Google Calendar event:', res.data.id);
     return res.data.id;
