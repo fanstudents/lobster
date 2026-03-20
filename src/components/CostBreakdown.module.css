@@ -1,0 +1,117 @@
+.section {
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-elevated) 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+/* Tier grid */
+.tierGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.tierCard {
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  border-top: 3px solid var(--color-border);
+  position: relative;
+}
+
+.tierIcon {
+  font-size: 2rem;
+  margin-bottom: var(--space-3);
+}
+
+.tierTitle {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.tierPricing {
+  margin-bottom: var(--space-6);
+}
+
+.tierOriginal {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  margin-bottom: var(--space-1);
+}
+
+.tierCurrent {
+  font-size: var(--text-3xl);
+  font-weight: 900;
+  margin-bottom: var(--space-1);
+}
+
+.tierNote {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.tierItems {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: left;
+}
+
+.tierItems li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.tierCheck {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Notice */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  background: linear-gradient(135deg, hsl(150, 40%, 97%), hsl(220, 40%, 97%));
+  border: 1px solid hsl(150, 40%, 85%);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+}
+
+.noticeIcon {
+  flex-shrink: 0;
+  color: hsl(150, 55%, 40%);
+  margin-top: 2px;
+}
+
+.notice p {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.notice strong {
+  color: var(--color-text);
+}
+
+.ctaWrap {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .tierGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,112 @@
+.section {
+  position: relative;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.comparison {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-6);
+  position: relative;
+}
+
+.compCard {
+  flex: 1;
+  padding: var(--space-8);
+}
+
+.compCard.bad {
+  border-color: rgba(255, 80, 80, 0.15);
+}
+
+.compCard.good {
+  border-color: rgba(230, 70, 50, 0.3);
+  background: rgba(230, 70, 50, 0.05);
+  box-shadow: 0 0 40px rgba(230, 70, 50, 0.1);
+}
+
+.compHeader {
+  margin-bottom: var(--space-6);
+}
+
+.compHeader h3 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.compList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.compList li {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  line-height: 1.6;
+}
+
+.xIcon {
+  color: hsl(0, 70%, 60%);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.checkIcon {
+  color: var(--color-success);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.vsCircle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  color: var(--color-text-muted);
+  z-index: 2;
+}
+
+.bottom {
+  text-align: center;
+  margin-top: var(--space-12);
+}
+
+.bottomText {
+  font-size: var(--text-xl);
+  color: var(--color-text-secondary);
+}
+
+.bottomText strong {
+  color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .comparison {
+    flex-direction: column;
+  }
+
+  .vsCircle {
+    position: static;
+    transform: none;
+    margin: var(--space-4) auto;
+  }
+}

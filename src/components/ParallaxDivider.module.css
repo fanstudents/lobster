@@ -1,0 +1,38 @@
+.wrapper {
+  padding: var(--space-4) 0;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.primary .text {
+  color: var(--color-primary-light);
+}
+
+.accent .text {
+  color: var(--color-accent);
+}
+
+.enterprise .text {
+  color: var(--color-enterprise);
+}

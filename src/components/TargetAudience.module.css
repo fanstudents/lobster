@@ -1,0 +1,76 @@
+.section {
+  background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg) 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.svgWrap {
+  max-width: 700px;
+  margin: 0 auto var(--space-10);
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+}
+
+.keyPoints {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+  max-width: 900px;
+  margin: 0 auto var(--space-10);
+}
+
+.keyPoint {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-lg);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--color-border);
+}
+
+.keyPointIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: rgba(100, 200, 130, 0.1);
+  border: 1px solid rgba(100, 200, 130, 0.2);
+  color: var(--color-success);
+  flex-shrink: 0;
+}
+
+.keyPoint h4 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.keyPoint p {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.ctaArea {
+  text-align: center;
+}
+
+.ctaText {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .keyPoints {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,33 +1,160 @@
+/* ============================================
+   AI 龍蝦課程 — 設計系統
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;600;700;900&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors — Light Theme */
+  --color-bg: #f8f8fa;
+  --color-bg-elevated: #ffffff;
+  --color-bg-card: rgba(0, 0, 0, 0.015);
+  --color-bg-glass: rgba(255, 255, 255, 0.75);
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-border-hover: rgba(0, 0, 0, 0.2);
+
+  --color-text: #1a1a2e;
+  --color-text-secondary: #444455;
+  --color-text-muted: #777788;
+
+  --color-primary: hsl(8, 80%, 48%);
+  --color-primary-light: hsl(8, 75%, 42%);
+  --color-primary-dark: hsl(8, 80%, 35%);
+  --color-primary-glow: hsla(8, 85%, 50%, 0.15);
+
+  --color-accent: hsl(30, 90%, 45%);
+  --color-accent-light: hsl(30, 95%, 50%);
+  --color-accent-glow: hsla(30, 90%, 50%, 0.15);
+
+  --color-success: hsl(150, 55%, 35%);
+  --color-enterprise: hsl(220, 65%, 50%);
+  --color-enterprise-glow: hsla(220, 65%, 50%, 0.15);
+
+  /* Typography */
+  --font-sans: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter', 'Noto Sans TC', sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.5rem;
+  --text-6xl: 4.5rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Borders & Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-glow-primary: 0 0 30px var(--color-primary-glow);
+  --shadow-glow-accent: 0 0 30px var(--color-accent-glow);
+  --shadow-glow-enterprise: 0 0 30px var(--color-enterprise-glow);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================
+   Reset & Base
+   ============================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Flowing ambient background orbs */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(120px);
+}
+
+body::before {
+  width: 500px;
+  height: 500px;
+  background: hsla(8, 85%, 55%, 0.05);
+  top: 20%;
+  left: -10%;
+  animation: ambientDrift1 20s ease-in-out infinite;
+}
+
+body::after {
+  width: 400px;
+  height: 400px;
+  background: hsla(42, 90%, 60%, 0.04);
+  bottom: 10%;
+  right: -5%;
+  animation: ambientDrift2 25s ease-in-out infinite;
+}
+
+/* Third orb via main element */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+main::before {
+  content: '';
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  background: hsla(220, 70%, 60%, 0.03);
+  border-radius: 50%;
+  filter: blur(100px);
+  top: 60%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientDrift3 30s ease-in-out infinite;
 }
 
 a {
@@ -35,8 +162,289 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.section {
+  padding: var(--space-24) 0;
+  position: relative;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(230, 70, 50, 0.06);
+  border: 1px solid rgba(230, 70, 50, 0.12);
+  border-radius: var(--radius-full);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  max-width: 640px;
+  line-height: 1.8;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, hsl(8, 80%, 48%), hsl(30, 90%, 45%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, var(--color-enterprise), hsl(260, 70%, 65%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-base);
+}
+
+.glass-card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-base);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, hsl(8, 80%, 55%), hsl(15, 85%, 48%));
+  color: #ffffff !important;
+  box-shadow: 0 2px 12px hsla(8, 80%, 50%, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 20px hsla(8, 80%, 50%, 0.35);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, hsl(30, 85%, 45%), hsl(25, 90%, 40%));
+  color: white;
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 50px var(--color-accent-glow);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border-hover);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.btn-enterprise {
+  background: linear-gradient(135deg, var(--color-enterprise), hsl(260, 70%, 55%));
+  color: white;
+  box-shadow: var(--shadow-glow-enterprise);
+}
+
+.btn-enterprise:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 50px var(--color-enterprise-glow);
+}
+
+.btn-lg {
+  padding: var(--space-5) var(--space-10);
+  font-size: var(--text-lg);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes ambientDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(15vw, -10vh) scale(1.1); }
+  50% { transform: translate(25vw, 5vh) scale(0.9); }
+  75% { transform: translate(10vw, 15vh) scale(1.05); }
+}
+
+@keyframes ambientDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-20vw, 8vh) scale(1.15); }
+  50% { transform: translate(-10vw, -12vh) scale(0.95); }
+  75% { transform: translate(-25vw, -5vh) scale(1.1); }
+}
+
+@keyframes ambientDrift3 {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  33% { transform: translate(-30%, -15vh) scale(1.2); }
+  66% { transform: translate(-70%, 10vh) scale(0.85); }
+}
+
+.animate-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --text-5xl: 2.5rem;
+    --text-4xl: 2rem;
+    --text-3xl: 1.5rem;
+  }
+
+  .section {
+    padding: var(--space-16) 0;
+  }
+
+  .container {
+    padding: 0 var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-5xl: 2rem;
+    --text-4xl: 1.75rem;
+    --text-3xl: 1.375rem;
+  }
+}
+
+/* Hide Next.js dev indicator */
+[data-nextjs-dialog-overlay],
+[data-nextjs-dialog],
+body > nextjs-portal {
+  display: none !important;
 }

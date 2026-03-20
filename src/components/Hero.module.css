@@ -1,0 +1,367 @@
+.hero {
+  position: relative;
+  padding: var(--space-32) 0 var(--space-16);
+  text-align: center;
+  overflow: hidden;
+}
+
+.bgOrbs {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.orb1, .orb2, .orb3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+}
+
+.orb1 { width: 600px; height: 600px; background: var(--color-orb-1); top: -200px; left: -100px; }
+.orb2 { width: 500px; height: 500px; background: var(--color-orb-2); top: 50%; right: -150px; }
+.orb3 { width: 400px; height: 400px; background: var(--color-orb-3); bottom: -100px; left: 30%; }
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(230, 70, 50, 0.1);
+  border: 1px solid rgba(230, 70, 50, 0.2);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-8);
+  animation: fadeInUp 0.6s ease;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.03em;
+  animation: fadeInUp 0.6s ease 0.1s both;
+}
+
+.subtitle {
+  font-size: var(--text-xl);
+  color: var(--color-text-secondary);
+  max-width: 680px;
+  margin: 0 auto var(--space-10);
+  line-height: 1.8;
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.subtitle strong {
+  color: var(--color-text);
+}
+
+/* ===== Three CTA Cards — Vertical Design ===== */
+.ctaCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  max-width: 860px;
+  margin: 0 auto;
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+.ctaCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+  border-radius: 20px;
+  background: white;
+  border: 1.5px solid var(--color-border);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ctaCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+.ctaCard:hover::before {
+  opacity: 1;
+}
+
+/* Live card */
+.ctaCardLive::before {
+  background: linear-gradient(90deg, hsl(150, 55%, 45%), hsl(170, 50%, 50%));
+}
+
+/* Main card — white bg, red border */
+.ctaCardMain {
+  background: white;
+  border: 2px solid hsl(8, 75%, 55%);
+  box-shadow: 0 4px 24px hsla(8, 80%, 50%, 0.12);
+  transform: scale(1.03);
+}
+
+.ctaCardMain::before {
+  background: linear-gradient(90deg, hsl(8, 80%, 55%), hsl(20, 85%, 50%));
+  opacity: 1;
+}
+
+.ctaCardMain:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 16px 40px hsla(8, 80%, 50%, 0.2);
+  border-color: hsl(8, 75%, 50%);
+}
+
+/* Enterprise card */
+.ctaCardEnt::before {
+  background: linear-gradient(90deg, hsl(220, 60%, 55%), hsl(240, 55%, 60%));
+}
+
+/* Top badge */
+.ctaTopBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-secondary);
+}
+
+.ctaCardMain .ctaTopBadge {
+  background: hsla(8, 80%, 55%, 0.1);
+  color: hsl(8, 75%, 50%);
+}
+
+/* Live dot */
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: hsl(0, 85%, 55%);
+  animation: livePulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 hsla(0, 85%, 55%, 0.5); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 5px hsla(0, 85%, 55%, 0); }
+}
+
+/* Icon */
+.ctaIconLarge {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  margin-bottom: var(--space-4);
+  transition: transform 0.3s ease;
+}
+
+.ctaCard:hover .ctaIconLarge {
+  transform: scale(1.1);
+}
+
+.ctaCardLive .ctaIconLarge {
+  background: hsl(150, 50%, 94%);
+  border: 1.5px solid hsl(150, 45%, 82%);
+  color: hsl(150, 55%, 35%);
+}
+
+.ctaCardMain .ctaIconLarge {
+  background: hsla(8, 80%, 55%, 0.08);
+  border: 1.5px solid hsla(8, 80%, 55%, 0.2);
+  color: hsl(8, 75%, 50%);
+}
+
+/* Lobster image in main card */
+.ctaLobsterWrap {
+  margin-bottom: var(--space-4);
+}
+
+.ctaLobsterImg {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.ctaCard:hover .ctaLobsterImg {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.ctaCardEnt .ctaIconLarge {
+  background: hsl(220, 60%, 95%);
+  border: 1.5px solid hsl(220, 50%, 85%);
+  color: hsl(220, 60%, 50%);
+}
+
+/* Text */
+.ctaTitle {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  margin-bottom: var(--space-2);
+}
+
+.ctaSubtext {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-1);
+}
+
+.ctaCardMain .ctaSubtext {
+  color: var(--color-text-secondary);
+}
+
+.ctaPrice {
+  font-size: var(--text-sm);
+  color: hsl(8, 75%, 50%);
+  margin-bottom: var(--space-1);
+}
+
+.ctaPrice strong {
+  font-size: var(--text-xl);
+  font-weight: 800;
+}
+
+.ctaDuration {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.ctaCardMain .ctaDuration {
+  color: var(--color-text-muted);
+}
+
+/* CTA button */
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+}
+
+.ctaCardLive .ctaBtn {
+  background: hsl(150, 50%, 94%);
+  color: hsl(150, 55%, 30%);
+}
+
+.ctaCardLive:hover .ctaBtn {
+  background: hsl(150, 55%, 35%);
+  color: white;
+}
+
+.ctaCardMain .ctaBtn {
+  background: hsl(8, 75%, 55%);
+  color: white;
+  border: none;
+}
+
+.ctaCardMain:hover .ctaBtn {
+  background: hsl(8, 75%, 48%);
+}
+
+.ctaCardEnt .ctaBtn {
+  background: hsl(220, 60%, 95%);
+  color: hsl(220, 60%, 45%);
+}
+
+.ctaCardEnt:hover .ctaBtn {
+  background: hsl(220, 60%, 50%);
+  color: white;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-24) 0 var(--space-12);
+  }
+
+  .title {
+    font-size: var(--text-4xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-base);
+  }
+
+  .ctaCards {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+  }
+
+  .ctaCardMain {
+    transform: none;
+    order: -1;
+  }
+
+  .ctaCardMain:hover {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
