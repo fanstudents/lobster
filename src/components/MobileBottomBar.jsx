@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { trackLineClick } from '@/lib/tracking';
 import styles from './MobileBottomBar.module.css';
 
 export default function MobileBottomBar() {
@@ -44,6 +45,7 @@ export default function MobileBottomBar() {
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.item} ${styles.lineItem}`}
+        onClick={() => trackLineClick('mobile_bar')}
       >
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/LINE_New_App_Icon_%282020-12%29.png/500px-LINE_New_App_Icon_%282020-12%29.png"

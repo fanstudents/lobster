@@ -5,6 +5,10 @@ import {
   Send, Check, AlertCircle, Loader2, CalendarDays,
   ArrowRight, ChevronLeft, ChevronRight, Clock,
 } from 'lucide-react';
+import {
+  trackInitiateBooking, trackSelectDate, trackSelectSlot,
+  trackRequestContact, trackLeadWithDate, trackLeadSkipDate, trackLineClick,
+} from '@/lib/tracking';
 import styles from './ConsultationForm.module.css';
 
 const teamSizeOptions = [
@@ -210,10 +214,12 @@ export default function ConsultationForm() {
 
   const handleDateSelect = (date) => {
     setForm((prev) => ({ ...prev, preferredDate: date, preferredSlot: '' }));
+    if (date) trackSelectDate(date);
   };
 
   const handleSlotSelect = (slot) => {
     setForm((prev) => ({ ...prev, preferredSlot: slot }));
+    if (slot) trackSelectSlot(form.preferredDate, slot);
   };
 
   const handleSubmit = async (e) => {
@@ -258,6 +264,12 @@ export default function ConsultationForm() {
       });
       if (!res.ok) throw new Error('Submit failed');
       setStatus('success');
+      // Track conversion
+      if (skipDate) {
+        trackLeadSkipDate({ name: form.name, email: form.email, company: form.company });
+      } else {
+        trackLeadWithDate({ name: form.name, email: form.email, company: form.company, date: form.preferredDate, slot: form.preferredSlot });
+      }
     } catch (err) {
       console.error('Form submission error:', err);
       setStatus('error');
@@ -288,6 +300,7 @@ export default function ConsultationForm() {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.lineLink}
+          onClick={() => trackLineClick('success_card')}
         >
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/LINE_New_App_Icon_%282020-12%29.png/500px-LINE_New_App_Icon_%282020-12%29.png"
@@ -308,7 +321,7 @@ export default function ConsultationForm() {
       <div className={styles.expandArea}>
         <button
           className={`btn btn-enterprise btn-lg ${styles.expandBtn}`}
-          onClick={() => setExpanded(true)}
+          onClick={() => { setExpanded(true); trackInitiateBooking(); }}
         >
           <Send size={18} />
           立即預約免費諮詢
@@ -336,7 +349,7 @@ export default function ConsultationForm() {
         <button
           type="button"
           className={`${styles.skipDateBtn} ${skipDate ? styles.skipDateActive : ''}`}
-          onClick={() => { setSkipDate(true); setForm(prev => ({ ...prev, preferredDate: '', preferredSlot: '' })); }}
+          onClick={() => { setSkipDate(true); setForm(prev => ({ ...prev, preferredDate: '', preferredSlot: '' })); trackRequestContact(); }}
         >
           📞 請主動跟我聯繫
         </button>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { CalendarDays, Lock, ArrowRight, Check, AlertCircle, Loader2 } from 'lucide-react';
+import { trackFreeLectureSignup } from '@/lib/tracking';
 import styles from './LiveEvent.module.css';
 
 export default function LiveEvent() {
@@ -82,6 +83,7 @@ export default function LiveEvent() {
       });
       if (!res.ok) throw new Error('Submit failed');
       setStatus('success');
+      trackFreeLectureSignup({ name: form.name, email: form.email });
     } catch (err) {
       console.error('Registration error:', err);
       setStatus('error');
