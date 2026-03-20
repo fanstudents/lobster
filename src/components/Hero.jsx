@@ -55,6 +55,14 @@ export default function Hero() {
           {/* 企業導入卡 */}
           <a href="#enterprise" className={`${styles.ctaCard} ${styles.ctaCardEnt}`}>
             <div className={styles.ctaGlow} />
+            <Image
+              src="/lobster-hero.png"
+              alt="AI 龍蝦"
+              width={100}
+              height={100}
+              className={styles.ctaLobster}
+              priority
+            />
             <div className={styles.ctaContent}>
               <div className={styles.ctaTopBadge}>
                 🏢 企業方案
@@ -71,21 +79,6 @@ export default function Hero() {
               </span>
             </div>
           </a>
-        </div>
-
-        {/* 龍蝦形象 */}
-        <div className={styles.lobsterWrap}>
-          <Image
-            src="/lobster-hero.png"
-            alt="AI 龍蝦"
-            width={180}
-            height={180}
-            className={styles.lobsterImg}
-            priority
-          />
-          <p className={styles.lobsterCaption}>
-            🦞 你的專屬 AI 龍蝦，24 小時幫你工作
-          </p>
         </div>
       </div>
     </section>

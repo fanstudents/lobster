@@ -50,12 +50,12 @@ export default function TemplateGallery() {
         <div className={`animate-in ${styles.header}`}>
           <div className="section-label">實戰模板</div>
           <h2 className="section-title">
-            帶走超過 <span className="text-gradient">50 種模板</span>
+            超過 <span className="text-gradient">50 種工作流模板</span>
             <br />
-            回去直接套用
+            導入後直接套用
           </h2>
           <p className="section-subtitle">
-            每個模板都是經過驗證的實戰工作流。不是教你理論，是讓你馬上就能用。
+            每個模板都是經過驗證的實戰工作流。不是教你理論，是讓你的團隊馬上就能用。
           </p>
         </div>
 
@@ -89,9 +89,9 @@ export default function TemplateGallery() {
             <div>
               <p className={styles.moreTitle}>以上只是其中 16 種</p>
               <p className={styles.moreDesc}>
-                課程提供超過 <strong>50 種可直接套用的工作流模板</strong>，
+                我們提供超過 <strong>50 種可直接套用的工作流模板</strong>，
                 涵蓋行銷、客服、人資、財務、專案管理等領域。
-                上完課不是空手而歸，是帶著一整套系統回去。
+                導入後不是空手而歸，是帶著一整套系統開始運作。
               </p>
             </div>
           </div>

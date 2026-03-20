@@ -291,35 +291,23 @@
   transition: all 0.3s ease;
 }
 
-/* ===== Lobster Mascot ===== */
-.lobsterWrap {
-  margin-top: var(--space-10);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  animation: fadeInUp 0.6s ease 0.5s both;
+/* ===== Lobster in Enterprise Card ===== */
+.ctaLobster {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  opacity: 0.15;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.lobsterImg {
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
-  transition: transform 0.4s ease;
-  animation: lobsterFloat 4s ease-in-out infinite;
-}
-
-.lobsterImg:hover {
-  transform: scale(1.08) rotate(-5deg);
-}
-
-@keyframes lobsterFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.lobsterCaption {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  font-weight: 500;
+.ctaCardEnt:hover .ctaLobster {
+  opacity: 0.3;
+  transform: scale(1.1) rotate(-8deg);
 }
 
 /* ===== Mobile ===== */

@@ -107,7 +107,7 @@ export default function LobsterShowcase() {
             你的<span className="text-gradient">龍蝦軍團</span>正在集結
           </h2>
           <p className="section-subtitle">
-            每完成一個工作流，就部署一隻龍蝦。課程結束時，你的軍團就成形了。
+            每完成一個工作流，就部署一隻龍蝦。導入結束時，你的軍團就成形了。
           </p>
         </div>
 
@@ -144,7 +144,7 @@ export default function LobsterShowcase() {
             <span className={styles.counterUnit}>隻龍蝦已部署</span>
           </div>
           <p className={styles.counterDesc}>
-            每位學員都會在課程中打造自己的龍蝦軍團。你的陣容會長什麼樣子？
+            每位客戶都會在導入過程中打造自己的龍蝦軍團。你的陣容會長什麼樣子？
           </p>
         </div>
       </div>
