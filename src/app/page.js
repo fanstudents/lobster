@@ -6,7 +6,6 @@ import TemplateGallery from '@/components/TemplateGallery';
 import VisualShowcase from '@/components/VisualShowcase';
 import LobsterShowcase from '@/components/LobsterShowcase';
 import Instructors from '@/components/Instructors';
-import CaseStudies from '@/components/CaseStudies';
 import CostBreakdown from '@/components/CostBreakdown';
 import LiveEvent from '@/components/LiveEvent';
 import FAQ from '@/components/FAQ';
@@ -31,7 +30,6 @@ export default function Home() {
         <VisualShowcase />
         <LobsterShowcase />
         <Instructors />
-        <CaseStudies />
         <CostBreakdown />
         <LiveEvent />
         <FAQ />
