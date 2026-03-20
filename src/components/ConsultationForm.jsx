@@ -275,12 +275,12 @@ export default function ConsultationForm() {
         {skipDate ? (
           <p>
             感謝您的諮詢申請！<br />
-            我們會在 1 個工作天內主動與您聯繫，安排最適合的時間。
+            我們會在 2 個工作天內主動與您聯繫，安排最適合的時間。
           </p>
         ) : (
           <p>
             已為您預留 {formatDateShort(form.preferredDate)} {form.preferredSlot} 的諮詢時段。
-            <br />我們會在 1 個工作天內寄出確認信。
+            <br />您將會收到行事曆邀請，届時見！
           </p>
         )}
         <a

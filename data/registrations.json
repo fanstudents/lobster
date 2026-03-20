@@ -37,5 +37,18 @@
     "preferred_slot": "14:00–15:00",
     "event_date": "",
     "created_at": "2026-03-20T15:56:36.923Z"
+  },
+  {
+    "id": "mmz45q114xxh",
+    "type": "enterprise_consult",
+    "name": "樊松蒲",
+    "email": "fanstudents@gmail.com",
+    "phone": "0916198116",
+    "company": "原騰",
+    "team_size": "1–5 人",
+    "preferred_date": "2026-03-25",
+    "preferred_slot": "15:00–16:00",
+    "event_date": "",
+    "created_at": "2026-03-20T16:28:43.141Z"
   }
 ]
