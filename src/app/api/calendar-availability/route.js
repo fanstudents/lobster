@@ -48,19 +48,32 @@ export async function GET() {
     const lastDate = weekdays[weekdays.length - 1];
     const timeMax = taipeiToUTC(lastDate, 24); // end of last day
 
-    // Fetch busy times from Google Calendar
+    // Fetch busy times from Google Calendar(s)
     let busySlots = [];
     if (gcal) {
       try {
+        // Build calendar list: primary + extras
+        const extraIds = (process.env.GOOGLE_EXTRA_CALENDAR_IDS || '')
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean);
+        const allCalendarIds = [gcal.calendarId, ...extraIds];
+
         const res = await gcal.calendar.freebusy.query({
           requestBody: {
             timeMin: timeMin.toISOString(),
             timeMax: timeMax.toISOString(),
             timeZone: TIMEZONE,
-            items: [{ id: gcal.calendarId }],
+            items: allCalendarIds.map((id) => ({ id })),
           },
         });
-        busySlots = res.data.calendars?.[gcal.calendarId]?.busy || [];
+
+        // Merge busy slots from all calendars
+        const calendars = res.data.calendars || {};
+        for (const calId of allCalendarIds) {
+          const calBusy = calendars[calId]?.busy || [];
+          busySlots.push(...calBusy);
+        }
       } catch (calErr) {
         console.error('Google Calendar freebusy error:', calErr.message);
       }
