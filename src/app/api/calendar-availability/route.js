@@ -1,139 +1,116 @@
 import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
-import fs from 'fs';
-import path from 'path';
+import { getCalendarClient } from '@/lib/google-calendar';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const REG_FILE = path.join(DATA_DIR, 'registrations.json');
-const DATE_FILE = path.join(DATA_DIR, 'date-config.json');
+// Slot config: weekdays only, 60-min slots
+// Morning block: 09:00–17:00  (slots: 09, 10, 11, 12, 13, 14, 15, 16)
+// Evening block: 21:00–24:00  (slots: 21, 22, 23)
+const SLOT_HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 21, 22, 23];
+const TIMEZONE = 'Asia/Taipei';
 
-function getCalendarClient() {
-  const keyFileContent = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-  const calendarId = process.env.GOOGLE_CALENDAR_ID;
-
-  if (!keyFileContent || !calendarId) {
-    return null;
-  }
-
-  try {
-    const credentials = JSON.parse(keyFileContent);
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
-    });
-    const calendar = google.calendar({ version: 'v3', auth });
-    return { calendar, calendarId };
-  } catch (err) {
-    console.error('Failed to init Google Calendar client:', err.message);
-    return null;
-  }
+function isWeekday(date) {
+  const day = date.getDay();
+  return day >= 1 && day <= 5;
 }
 
-function getLocalBookingCounts() {
-  try {
-    if (!fs.existsSync(REG_FILE)) return {};
-    const registrations = JSON.parse(fs.readFileSync(REG_FILE, 'utf-8'));
-    const counts = {};
-    registrations.forEach((r) => {
-      if (r.type === 'enterprise_consult' && r.preferred_date) {
-        counts[r.preferred_date] = (counts[r.preferred_date] || 0) + 1;
-      }
-    });
-    return counts;
-  } catch {
-    return {};
-  }
+// Convert a Date to Asia/Taipei local date string YYYY-MM-DD
+function toTaipeiDateStr(date) {
+  return date.toLocaleDateString('sv-SE', { timeZone: TIMEZONE });
 }
 
-function getDateConfig() {
-  try {
-    if (!fs.existsSync(DATE_FILE)) return { defaultCapacity: 3, overrides: {} };
-    return JSON.parse(fs.readFileSync(DATE_FILE, 'utf-8'));
-  } catch {
-    return { defaultCapacity: 3, overrides: {} };
-  }
+// Create a Date in Asia/Taipei timezone for a given date string and hour
+function taipeiToUTC(dateStr, hour) {
+  // dateStr = "YYYY-MM-DD", hour = 9..23
+  // Build an ISO string in +08:00
+  const hh = String(hour).padStart(2, '0');
+  return new Date(`${dateStr}T${hh}:00:00+08:00`);
 }
 
-// GET: return available consultation time slots
-// Merges Google Calendar busy times + local booking capacity
 export async function GET() {
   try {
-    const bookingCounts = getLocalBookingCounts();
-    const dateConfig = getDateConfig();
-    const defaultCap = dateConfig.defaultCapacity || 3;
-    const overrides = dateConfig.overrides || {};
-
-    // Generate dates: +3 days from today, 30 days out
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const startDate = new Date(today);
-    startDate.setDate(startDate.getDate() + 3);
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 30);
-
-    // Try fetching Google Calendar busy times
-    let busyDates = new Set();
     const gcal = getCalendarClient();
 
+    // Date range: from tomorrow, 30 weekdays out
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // Collect 30 weekdays
+    const weekdays = [];
+    const cursor = new Date(tomorrow);
+    while (weekdays.length < 30) {
+      if (isWeekday(cursor)) {
+        weekdays.push(toTaipeiDateStr(cursor));
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+
+    const timeMin = taipeiToUTC(weekdays[0], SLOT_HOURS[0]);
+    const lastDate = weekdays[weekdays.length - 1];
+    const timeMax = taipeiToUTC(lastDate, 24); // end of last day
+
+    // Fetch busy times from Google Calendar
+    let busySlots = [];
     if (gcal) {
       try {
-        const freeBusyResponse = await gcal.calendar.freebusy.query({
+        const res = await gcal.calendar.freebusy.query({
           requestBody: {
-            timeMin: startDate.toISOString(),
-            timeMax: endDate.toISOString(),
+            timeMin: timeMin.toISOString(),
+            timeMax: timeMax.toISOString(),
+            timeZone: TIMEZONE,
             items: [{ id: gcal.calendarId }],
           },
         });
-
-        const busySlots = freeBusyResponse.data.calendars?.[gcal.calendarId]?.busy || [];
-
-        // Mark a day as busy if it has events covering most of working hours (9-18)
-        busySlots.forEach((slot) => {
-          const start = new Date(slot.start);
-          const end = new Date(slot.end);
-
-          // If event spans 6+ hours, mark the whole day as busy
-          const hours = (end - start) / (1000 * 60 * 60);
-          if (hours >= 6) {
-            const dateStr = start.toISOString().split('T')[0];
-            busyDates.add(dateStr);
-          }
-        });
+        busySlots = res.data.calendars?.[gcal.calendarId]?.busy || [];
       } catch (calErr) {
-        console.error('Google Calendar API error:', calErr.message);
-        // Fallback to capacity-only mode
+        console.error('Google Calendar freebusy error:', calErr.message);
       }
     }
 
-    // Build available dates
-    const dates = [];
-    for (let i = 0; i < 30; i++) {
-      const d = new Date(startDate);
-      d.setDate(d.getDate() + i);
-      const dateStr = d.toISOString().split('T')[0];
-
-      const capacity = overrides[dateStr] !== undefined ? overrides[dateStr] : defaultCap;
-      const booked = bookingCounts[dateStr] || 0;
-      const available = capacity - booked;
-      const calendarBusy = busyDates.has(dateStr);
-
-      dates.push({
-        date: dateStr,
-        capacity,
-        booked,
-        available: Math.max(0, available),
-        full: available <= 0 || calendarBusy,
-        calendarBusy,
+    // Check if a 60-min slot overlaps any busy period
+    function isSlotBusy(slotStart, slotEnd) {
+      return busySlots.some((b) => {
+        const bStart = new Date(b.start);
+        const bEnd = new Date(b.end);
+        return slotStart < bEnd && slotEnd > bStart;
       });
     }
 
+    // Build result: per-date array of available time slots
+    const result = weekdays.map((dateStr) => {
+      const slots = SLOT_HOURS.map((hour) => {
+        const start = taipeiToUTC(dateStr, hour);
+        const end = new Date(start.getTime() + 60 * 60 * 1000);
+        const busy = isSlotBusy(start, end);
+
+        // Also skip slots in the past
+        const isPast = start <= now;
+
+        return {
+          hour,
+          label: `${String(hour).padStart(2, '0')}:00–${String(hour + 1).padStart(2, '0')}:00`,
+          available: !busy && !isPast,
+          busy,
+          past: isPast,
+        };
+      });
+
+      const availableCount = slots.filter((s) => s.available).length;
+
+      return {
+        date: dateStr,
+        slots,
+        availableCount,
+        allBusy: availableCount === 0,
+      };
+    });
+
     return NextResponse.json({
       calendarConnected: !!gcal,
-      defaultCapacity: defaultCap,
-      overrides,
-      dates,
+      timezone: TIMEZONE,
+      dates: result,
     });
   } catch (err) {
+    console.error('calendar-availability error:', err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { createCalendarEvent } from '@/lib/google-calendar';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DATA_FILE = path.join(DATA_DIR, 'registrations.json');
@@ -35,7 +36,7 @@ export async function GET() {
   }
 }
 
-// POST: add a registration + trigger webhook
+// POST: add a registration + trigger webhook + create Google Calendar event
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -48,6 +49,7 @@ export async function POST(request) {
       company: body.company || '',
       team_size: body.team_size || '',
       preferred_date: body.preferred_date || '',
+      preferred_slot: body.preferred_slot || '',
       event_date: body.event_date || '',
       created_at: new Date().toISOString(),
     };
@@ -59,6 +61,19 @@ export async function POST(request) {
 
     // Trigger webhook (fire-and-forget)
     triggerWebhook(record).catch((e) => console.error('Webhook error:', e));
+
+    // Create Google Calendar event for enterprise consultations (fire-and-forget)
+    if (record.type === 'enterprise_consult' && record.preferred_date && record.preferred_slot) {
+      createCalendarEvent({
+        date: record.preferred_date,
+        slot: record.preferred_slot,
+        name: record.name,
+        email: record.email,
+        company: record.company,
+        phone: record.phone,
+        teamSize: record.team_size,
+      }).catch((e) => console.error('Calendar event creation error:', e));
+    }
 
     return NextResponse.json({ success: true, id: record.id });
   } catch (err) {

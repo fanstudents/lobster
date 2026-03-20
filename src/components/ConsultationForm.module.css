@@ -200,3 +200,330 @@
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
 }
+
+/* ===== Selected Date Label ===== */
+.selectedDateLabel {
+  font-weight: 500;
+  color: var(--color-enterprise, hsl(230, 65%, 58%));
+  margin-left: 6px;
+  font-size: var(--text-xs);
+}
+
+/* ===== Calendar Picker ===== */
+.calendar {
+  border: 1.5px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 10px);
+  background: white;
+  overflow: hidden;
+}
+
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: hsl(230, 25%, 97%);
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+}
+
+.calendarTitle {
+  font-size: var(--text-sm, 14px);
+  font-weight: 700;
+  color: var(--color-text, #1a1a2e);
+  letter-spacing: 0.5px;
+}
+
+.calendarNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 6px;
+  background: white;
+  color: var(--color-text-secondary, #666);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.calendarNav:hover {
+  background: hsl(230, 25%, 95%);
+  border-color: hsl(230, 30%, 80%);
+  color: var(--color-text, #1a1a2e);
+}
+
+.calendarWeekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 6px 8px 4px;
+  border-bottom: 1px solid hsl(230, 20%, 94%);
+}
+
+.calendarWeekday {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 6px 8px 8px;
+  gap: 3px;
+}
+
+.calendarEmpty {
+  aspect-ratio: 1;
+}
+
+.calendarDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 2px;
+  position: relative;
+  min-height: 40px;
+}
+
+.calendarDayNum {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.calendarDaySlots {
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 2px;
+  color: hsl(150, 50%, 40%);
+}
+
+.calendarDayTag {
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 2px;
+  color: hsl(0, 0%, 65%);
+}
+
+/* Available */
+.calendarDayAvailable {
+  background: hsl(150, 40%, 96%);
+  border-color: hsl(150, 40%, 85%);
+  color: hsl(150, 45%, 30%);
+}
+
+.calendarDayAvailable:hover {
+  background: hsl(150, 45%, 92%);
+  border-color: hsl(150, 50%, 65%);
+  transform: scale(1.05);
+}
+
+/* Selected */
+.calendarDaySelected {
+  background: hsl(230, 65%, 56%) !important;
+  border-color: hsl(230, 65%, 45%) !important;
+  color: white !important;
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px hsla(230, 65%, 50%, 0.3);
+}
+
+.calendarDaySelected .calendarDaySlots {
+  color: hsla(0, 0%, 100%, 0.85);
+}
+
+/* Busy (from Google Calendar) */
+.calendarDayBusy {
+  background: hsl(0, 0%, 96%);
+  color: hsl(0, 0%, 65%);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.calendarDayBusy .calendarDayTag {
+  color: hsl(0, 50%, 55%);
+  text-decoration: none;
+}
+
+/* Full (booking capacity) */
+.calendarDayFull {
+  background: hsl(0, 50%, 97%);
+  color: hsl(0, 40%, 55%);
+  cursor: not-allowed;
+}
+
+.calendarDayFull .calendarDayTag {
+  color: hsl(0, 50%, 55%);
+}
+
+/* Out of range */
+.calendarDayOutOfRange {
+  color: hsl(0, 0%, 82%);
+  cursor: default;
+}
+
+.calendarDayOutOfRange:hover {
+  transform: none;
+}
+
+/* Legend */
+.calendarLegend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 12px 10px;
+  border-top: 1px solid hsl(230, 20%, 94%);
+  font-size: 11px;
+  color: var(--color-text-muted, #999);
+}
+
+.calendarLegend > span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legendDotAvailable,
+.legendDotBusy,
+.legendDotFull {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legendDotAvailable {
+  background: hsl(150, 50%, 55%);
+}
+
+.legendDotBusy {
+  background: hsl(0, 0%, 75%);
+}
+
+.legendDotFull {
+  background: hsl(0, 50%, 55%);
+}
+
+/* Calendar Loading */
+.calendarLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px 16px;
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text-muted, #999);
+  border: 1.5px dashed var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 10px);
+}
+
+/* ===== Time Slot Picker ===== */
+.timePicker {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1.5px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 10px);
+  padding: 12px;
+  background: white;
+  animation: fadeIn 0.25s ease;
+}
+
+.timeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.timeGroupLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #666);
+  padding-bottom: 2px;
+}
+
+.timeSlotGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+@media (max-width: 480px) {
+  .timeSlotGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.timeSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1.5px solid hsl(150, 40%, 85%);
+  border-radius: 8px;
+  background: hsl(150, 40%, 97%);
+  color: hsl(150, 45%, 30%);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.timeSlot:hover {
+  background: hsl(150, 45%, 92%);
+  border-color: hsl(150, 50%, 65%);
+  transform: scale(1.03);
+}
+
+.timeSlotSelected {
+  background: hsl(230, 65%, 56%) !important;
+  border-color: hsl(230, 65%, 45%) !important;
+  color: white !important;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px hsla(230, 65%, 50%, 0.3);
+}
+
+.timeSlotDisabled {
+  background: hsl(0, 0%, 96%);
+  border-color: hsl(0, 0%, 90%);
+  color: hsl(0, 0%, 65%);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.timeSlotDisabled:hover {
+  transform: none;
+}
+
+.timeSlotTag {
+  font-size: 9px;
+  font-weight: 700;
+  color: hsl(0, 50%, 55%);
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  .calendarDay {
+    min-height: 36px;
+  }
+  .calendarDayNum {
+    font-size: 12px;
+  }
+  .calendarDaySlots {
+    font-size: 8px;
+  }
+}
