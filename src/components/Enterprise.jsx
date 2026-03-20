@@ -1,40 +1,17 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Check, ArrowRight, BookOpen, Rocket } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
 import ConsultationForm from './ConsultationForm';
 import styles from './Enterprise.module.css';
 
-const plans = [
-  {
-    icon: BookOpen,
-    name: '方案 A：企業課程版',
-    price: '依需求報價',
-    desc: '適合想快速建立團隊 AI 基礎認知的企業',
-    features: [
-      '4–8 小時課程',
-      '200 人以內內訓',
-      '基礎 AI 認知 + 實作',
-      '客製化案例設計',
-      '課後建議報告',
-    ],
-  },
-  {
-    icon: Rocket,
-    name: '方案 B：企業導入版',
-    price: '依需求報價',
-    desc: '適合想全面導入 AI 工作流的企業',
-    badge: '推薦',
-    features: [
-      '課前深度訪談與診斷',
-      '工作流程拆解與重設計',
-      'AI 工作流建置與導入',
-      '教學 + 導入一站完成',
-      '成效追蹤報告',
-      '3–6 個月陪跑服務',
-      '專屬顧問支援',
-    ],
-  },
+const highlights = [
+  '課前深度訪談與需求診斷',
+  '工作流程拆解與 AI 方案設計',
+  'AI 工作流建置與導入執行',
+  '教學 + 導入一站式完成',
+  '3–6 個月專屬顧問陪跑',
+  '成效追蹤與系統持續優化',
 ];
 
 export default function Enterprise() {
@@ -68,39 +45,27 @@ export default function Enterprise() {
           </p>
         </div>
 
-        <div className={styles.grid}>
-          {plans.map((plan, i) => {
-            const Icon = plan.icon;
-            return (
-              <div
-                key={i}
-                className={`animate-in glass-card ${styles.card}`}
-                style={{ transitionDelay: `${i * 0.15}s` }}
-              >
-                {plan.badge && <div className={styles.badge}>{plan.badge}</div>}
-                <div className={styles.cardIconWrap}>
-                  <Icon size={24} strokeWidth={1.5} />
+        <div className={`animate-in ${styles.serviceWrap}`}>
+          <div className={`glass-card ${styles.serviceCard}`}>
+            <div className={styles.zeroCostBadge}>0 元導入</div>
+            <h3 className={styles.serviceTitle}>企業 AI 工作流導入服務</h3>
+            <p className={styles.serviceDesc}>
+              從診斷到建置到陪跑，一站式幫你的團隊把 AI 真正用進日常工作。
+            </p>
+            <div className={styles.highlightGrid}>
+              {highlights.map((item, i) => (
+                <div key={i} className={styles.highlightItem}>
+                  <Check size={16} className={styles.checkIcon} />
+                  <span>{item}</span>
                 </div>
-                <h3 className={styles.cardName}>{plan.name}</h3>
-                <p className={styles.cardDesc}>{plan.desc}</p>
-                <div className={styles.cardPrice}>{plan.price}</div>
-                <ul className={styles.features}>
-                  {plan.features.map((f, j) => (
-                    <li key={j}>
-                      <Check size={14} className={styles.checkIcon} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className={`animate-in ${styles.ctaArea}`}>
-          <div className={styles.zeroCostBadge}>0 元導入</div>
           <p className={styles.ctaText}>
-            不確定需要哪種方案？預約免費諮詢，讓我們幫你評估最適合的導入方式。
+            預約免費諮詢，讓我們了解你的需求，為你設計最適合的導入方案。
           </p>
           <ConsultationForm />
         </div>

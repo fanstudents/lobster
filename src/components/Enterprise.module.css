@@ -21,102 +21,16 @@
   position: relative;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-6);
-  max-width: 900px;
-  margin: 0 auto;
+/* Service card */
+.serviceWrap {
+  max-width: 720px;
+  margin: 0 auto var(--space-10);
 }
 
-.card {
+.serviceCard {
   padding: var(--space-8);
+  text-align: center;
   position: relative;
-  text-align: center;
-}
-
-.badge {
-  position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  color: white;
-  background: linear-gradient(135deg, var(--color-enterprise), hsl(260, 70%, 55%));
-  padding: 2px 10px;
-  border-radius: var(--radius-full);
-}
-
-.cardIconWrap {
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto var(--space-4);
-  border-radius: var(--radius-md);
-  background: rgba(100, 130, 230, 0.08);
-  border: 1px solid rgba(100, 130, 230, 0.15);
-  color: var(--color-enterprise);
-}
-
-.cardName {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  margin-bottom: var(--space-2);
-}
-
-.cardDesc {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-4);
-}
-
-.cardPrice {
-  font-size: var(--text-2xl);
-  font-weight: 800;
-  margin-bottom: var(--space-6);
-  background: linear-gradient(135deg, var(--color-enterprise), hsl(260, 70%, 65%));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  text-align: left;
-}
-
-.features li {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-  line-height: 1.6;
-}
-
-.checkIcon {
-  color: var(--color-enterprise);
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-
-.ctaArea {
-  text-align: center;
-  margin-top: var(--space-12);
-}
-
-.ctaText {
-  font-size: var(--text-lg);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-6);
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .zeroCostBadge {
@@ -131,8 +45,62 @@
   letter-spacing: 0.02em;
 }
 
+.serviceTitle {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  margin-bottom: var(--space-3);
+}
+
+.serviceDesc {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-8);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.highlightGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3) var(--space-6);
+  text-align: left;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.highlightItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.checkIcon {
+  color: var(--color-enterprise);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* CTA area */
+.ctaArea {
+  text-align: center;
+}
+
+.ctaText {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (max-width: 768px) {
-  .grid {
+  .highlightGrid {
     grid-template-columns: 1fr;
   }
 }
