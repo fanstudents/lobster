@@ -73,8 +73,6 @@ export async function createCalendarEvent({ date, slot, name, email, company, ph
       `📱 電話：${phone}`,
       `🏢 公司：${company}`,
       `👥 團隊人數：${teamSize}`,
-      ``,
-      `⚡ 由 AI 龍蝦課預約系統自動建立`,
     ].join('\n'),
     start: {
       dateTime: startTime,

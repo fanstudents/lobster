@@ -180,15 +180,21 @@
 }
 
 .successIcon {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: hsl(150, 55%, 95%);
+  background: linear-gradient(135deg, hsl(150, 55%, 92%), hsl(150, 55%, 85%));
   border: 2px solid hsl(150, 55%, 75%);
   color: var(--color-success);
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .successCard h4 {
@@ -203,7 +209,7 @@
 
 /* ===== Selected Date Label ===== */
 .selectedDateLabel {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-enterprise, hsl(230, 65%, 58%));
   margin-left: 6px;
   font-size: var(--text-xs);
@@ -212,17 +218,18 @@
 /* ===== Calendar Picker ===== */
 .calendar {
   border: 1.5px solid var(--color-border, #e2e8f0);
-  border-radius: var(--radius-md, 10px);
+  border-radius: 14px;
   background: white;
   overflow: hidden;
+  box-shadow: 0 2px 12px hsla(230, 30%, 50%, 0.06);
 }
 
 .calendarHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  background: hsl(230, 25%, 97%);
+  padding: 12px 14px;
+  background: linear-gradient(135deg, hsl(230, 30%, 97%), hsl(250, 25%, 96%));
   border-bottom: 1px solid var(--color-border, #e2e8f0);
 }
 
@@ -237,34 +244,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border: 1px solid var(--color-border, #e2e8f0);
-  border-radius: 6px;
+  border-radius: 8px;
   background: white;
   color: var(--color-text-secondary, #666);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .calendarNav:hover {
-  background: hsl(230, 25%, 95%);
-  border-color: hsl(230, 30%, 80%);
+  background: hsl(230, 30%, 94%);
+  border-color: hsl(230, 40%, 78%);
   color: var(--color-text, #1a1a2e);
+  transform: scale(1.05);
 }
 
 .calendarWeekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: 6px 8px 4px;
+  padding: 8px 10px 6px;
   border-bottom: 1px solid hsl(230, 20%, 94%);
 }
 
 .calendarWeekday {
   text-align: center;
   font-size: 11px;
-  font-weight: 600;
-  color: var(--color-text-muted, #999);
+  font-weight: 700;
+  color: hsl(230, 20%, 65%);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -272,8 +280,8 @@
 .calendarGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: 6px 8px 8px;
-  gap: 3px;
+  padding: 8px 10px 10px;
+  gap: 4px;
 }
 
 .calendarEmpty {
@@ -287,13 +295,14 @@
   justify-content: center;
   aspect-ratio: 1;
   border: 1.5px solid transparent;
-  border-radius: 8px;
+  border-radius: 10px;
   background: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   padding: 2px;
   position: relative;
-  min-height: 40px;
+  min-height: 42px;
+  gap: 2px;
 }
 
 .calendarDayNum {
@@ -302,59 +311,58 @@
   line-height: 1;
 }
 
-.calendarDaySlots {
-  font-size: 9px;
-  font-weight: 500;
-  line-height: 1;
-  margin-top: 2px;
-  color: hsl(150, 50%, 40%);
+/* Small dot indicator for available days */
+.calendarDayDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: hsl(150, 55%, 50%);
 }
 
 .calendarDayTag {
   font-size: 8px;
   font-weight: 700;
   line-height: 1;
-  margin-top: 2px;
   color: hsl(0, 0%, 65%);
 }
 
 /* Available */
 .calendarDayAvailable {
-  background: hsl(150, 40%, 96%);
-  border-color: hsl(150, 40%, 85%);
-  color: hsl(150, 45%, 30%);
+  background: hsl(150, 45%, 97%);
+  border-color: hsl(150, 40%, 88%);
+  color: hsl(150, 45%, 28%);
 }
 
 .calendarDayAvailable:hover {
-  background: hsl(150, 45%, 92%);
-  border-color: hsl(150, 50%, 65%);
-  transform: scale(1.05);
+  background: hsl(150, 50%, 93%);
+  border-color: hsl(150, 55%, 60%);
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px hsla(150, 50%, 40%, 0.12);
 }
 
 /* Selected */
 .calendarDaySelected {
-  background: hsl(230, 65%, 56%) !important;
-  border-color: hsl(230, 65%, 45%) !important;
+  background: linear-gradient(135deg, hsl(230, 70%, 58%), hsl(250, 65%, 55%)) !important;
+  border-color: hsl(230, 70%, 48%) !important;
   color: white !important;
-  transform: scale(1.08);
-  box-shadow: 0 2px 8px hsla(230, 65%, 50%, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 3px 12px hsla(230, 70%, 50%, 0.35);
 }
 
-.calendarDaySelected .calendarDaySlots {
-  color: hsla(0, 0%, 100%, 0.85);
+.calendarDaySelected .calendarDayDot {
+  background: rgba(255, 255, 255, 0.7);
 }
 
 /* Busy (from Google Calendar) */
 .calendarDayBusy {
-  background: hsl(0, 0%, 96%);
-  color: hsl(0, 0%, 65%);
+  background: hsl(0, 0%, 97%);
+  color: hsl(0, 0%, 72%);
   cursor: not-allowed;
-  text-decoration: line-through;
 }
 
 .calendarDayBusy .calendarDayTag {
-  color: hsl(0, 50%, 55%);
-  text-decoration: none;
+  color: hsl(0, 45%, 60%);
+  font-size: 9px;
 }
 
 /* Full (booking capacity) */
@@ -370,29 +378,31 @@
 
 /* Out of range */
 .calendarDayOutOfRange {
-  color: hsl(0, 0%, 82%);
+  color: hsl(0, 0%, 84%);
   cursor: default;
 }
 
 .calendarDayOutOfRange:hover {
   transform: none;
+  box-shadow: none;
 }
 
 /* Legend */
 .calendarLegend {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  padding: 8px 12px 10px;
+  gap: 20px;
+  padding: 10px 14px 12px;
   border-top: 1px solid hsl(230, 20%, 94%);
   font-size: 11px;
-  color: var(--color-text-muted, #999);
+  font-weight: 500;
+  color: hsl(230, 15%, 55%);
 }
 
 .calendarLegend > span {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .legendDotAvailable,
@@ -405,11 +415,11 @@
 }
 
 .legendDotAvailable {
-  background: hsl(150, 50%, 55%);
+  background: hsl(150, 55%, 50%);
 }
 
 .legendDotBusy {
-  background: hsl(0, 0%, 75%);
+  background: hsl(0, 0%, 78%);
 }
 
 .legendDotFull {
@@ -422,11 +432,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 32px 16px;
+  padding: 36px 16px;
   font-size: var(--text-sm, 14px);
   color: var(--color-text-muted, #999);
   border: 1.5px dashed var(--color-border, #e2e8f0);
-  border-radius: var(--radius-md, 10px);
+  border-radius: 14px;
 }
 
 /* ===== Time Slot Picker ===== */
@@ -435,23 +445,25 @@
   flex-direction: column;
   gap: 12px;
   border: 1.5px solid var(--color-border, #e2e8f0);
-  border-radius: var(--radius-md, 10px);
-  padding: 12px;
+  border-radius: 14px;
+  padding: 14px;
   background: white;
+  box-shadow: 0 2px 12px hsla(230, 30%, 50%, 0.06);
   animation: fadeIn 0.25s ease;
 }
 
 .timeGroup {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .timeGroupLabel {
   font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text-secondary, #666);
+  font-weight: 700;
+  color: hsl(230, 20%, 50%);
   padding-bottom: 2px;
+  letter-spacing: 0.3px;
 }
 
 .timeSlotGrid {
@@ -471,42 +483,44 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 8px 6px;
+  padding: 9px 6px;
   font-size: 12px;
   font-weight: 600;
-  border: 1.5px solid hsl(150, 40%, 85%);
-  border-radius: 8px;
-  background: hsl(150, 40%, 97%);
-  color: hsl(150, 45%, 30%);
+  border: 1.5px solid hsl(150, 40%, 88%);
+  border-radius: 10px;
+  background: hsl(150, 45%, 97%);
+  color: hsl(150, 45%, 28%);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
 }
 
 .timeSlot:hover {
-  background: hsl(150, 45%, 92%);
-  border-color: hsl(150, 50%, 65%);
-  transform: scale(1.03);
+  background: hsl(150, 50%, 93%);
+  border-color: hsl(150, 55%, 60%);
+  transform: scale(1.04);
+  box-shadow: 0 2px 8px hsla(150, 50%, 40%, 0.1);
 }
 
 .timeSlotSelected {
-  background: hsl(230, 65%, 56%) !important;
-  border-color: hsl(230, 65%, 45%) !important;
+  background: linear-gradient(135deg, hsl(230, 70%, 58%), hsl(250, 65%, 55%)) !important;
+  border-color: hsl(230, 70%, 48%) !important;
   color: white !important;
-  transform: scale(1.05);
-  box-shadow: 0 2px 8px hsla(230, 65%, 50%, 0.3);
+  transform: scale(1.06);
+  box-shadow: 0 3px 10px hsla(230, 70%, 50%, 0.3);
 }
 
 .timeSlotDisabled {
-  background: hsl(0, 0%, 96%);
-  border-color: hsl(0, 0%, 90%);
-  color: hsl(0, 0%, 65%);
+  background: hsl(0, 0%, 97%);
+  border-color: hsl(0, 0%, 92%);
+  color: hsl(0, 0%, 68%);
   cursor: not-allowed;
   text-decoration: line-through;
 }
 
 .timeSlotDisabled:hover {
   transform: none;
+  box-shadow: none;
 }
 
 .timeSlotTag {
@@ -518,12 +532,9 @@
 
 @media (max-width: 480px) {
   .calendarDay {
-    min-height: 36px;
+    min-height: 38px;
   }
   .calendarDayNum {
     font-size: 12px;
-  }
-  .calendarDaySlots {
-    font-size: 8px;
   }
 }

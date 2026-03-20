@@ -100,15 +100,11 @@ function CalendarPicker({ dateMap, selectedDate, onSelectDate }) {
               disabled={!hasSlots}
               onClick={() => onSelectDate(isSelected ? '' : dateStr)}
               title={
-                allBusy ? '無可選時段' : hasSlots ? `${info.availableCount} 個可選時段` : ''
+                allBusy ? '無可選時段' : hasSlots ? '可預約' : ''
               }
             >
               <span className={styles.calendarDayNum}>{day}</span>
-              {hasSlots && (
-                <span className={styles.calendarDaySlots}>
-                  {info.availableCount}格
-                </span>
-              )}
+              {hasSlots && <span className={styles.calendarDayDot} />}
               {allBusy && isInRange && <span className={styles.calendarDayTag}>滿</span>}
             </button>
           );
