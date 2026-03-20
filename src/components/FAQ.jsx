@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     q: '企業導入的費用怎麼算？',
-    a: '導入費用目前活動期間全免（原價 NT$ 30,000）。後續費用依照實際場景報價。此外可能產生的 API Token 使用費，會依真實用量計價，帳單完全透明，使用者可以自行查看。',
+    a: '導入費用目前活動期間全免（原價 NT$ 30,000）。後續費用依照實際使用場景，按月收取。API Token 費用以實際用量計價，帳單完全透明，使用者可以自行查看。',
   },
   {
     q: '需要會寫程式嗎？',
@@ -54,6 +54,32 @@ const faqs = [
     q: '0 元導入是什麼意思？',
     a: '導入費用原價 NT$ 30,000，目前活動期間全額免除。你只需要在正式導入後，依照實際使用場景付費。這是為了讓更多企業能零風險體驗 AI 導入。',
   },
+  // ===== 以下為新增問題 =====
+  {
+    q: '導入需要多少時間？會影響到正常工作嗎？',
+    a: '導入初期約需 1–2 週完成訪談與方案設計，後續教學+導入約 2–4 週。過程中不會中斷正常業務，我們會安排在最適合的時段進行，每次約 1–2 小時。',
+  },
+  {
+    q: '公司只有幾個人，適合導入嗎？',
+    a: '完全適合。我們的方案不限人數，2–3 人的小團隊反而導入速度更快、效果更明顯。許多客戶反饋，人越少越容易感受到效率提升。',
+  },
+  {
+    q: '我的資料會不會被拿去訓練 AI？有沒有資安疑慮？',
+    a: '不會。我們使用的 API（如 OpenAI、Claude）都有明確的資料使用政策，API 呼叫的資料不會被用於模型訓練。如果有更高的資安需求，我們也能協助建置私有化部署方案。',
+    highlight: true,
+  },
+  {
+    q: '導入之後如果效果不好怎麼辦？',
+    a: '我們提供 3–6 個月的陪跑服務，會持續追蹤成效並即時調整。如果某個流程沒效果，我們會重新設計方案，直到找到最適合你的做法。',
+  },
+  {
+    q: '可以先試用看看再決定嗎？',
+    a: '可以。我們提供免費的 30 分鐘諮詢，會先針對你的工作流程做初步診斷，讓你了解 AI 能幫到什麼。不滿意完全不用付費，零風險。',
+  },
+  {
+    q: 'API 費用大概是多少？會不會很貴？',
+    a: '以一般文字處理的場景來說，每次 API 呼叫成本約幾毛到幾塊新台幣。多數企業每月 API 費用落在數百到數千元之間，我們會在課程中教你如何控制和優化成本。',
+  },
 ];
 
 function FAQItem({ item, isOpen, onToggle }) {
@@ -74,7 +100,20 @@ function FAQItem({ item, isOpen, onToggle }) {
 
 export default function FAQ() {
   const sectionRef = useRef(null);
-  const [openIndex, setOpenIndex] = useState(null);
+  // Default: all expanded
+  const [closedSet, setClosedSet] = useState(new Set());
+
+  const toggleItem = (index) => {
+    setClosedSet((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -111,8 +150,8 @@ export default function FAQ() {
               <FAQItem
                 key={i}
                 item={item}
-                isOpen={openIndex === i}
-                onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+                isOpen={!closedSet.has(i)}
+                onToggle={() => toggleItem(i)}
               />
             ))}
           </div>
@@ -123,8 +162,8 @@ export default function FAQ() {
                 <FAQItem
                   key={idx}
                   item={item}
-                  isOpen={openIndex === idx}
-                  onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
+                  isOpen={!closedSet.has(idx)}
+                  onToggle={() => toggleItem(idx)}
                 />
               );
             })}

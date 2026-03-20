@@ -120,6 +120,11 @@
   .lobsterName {
     display: none;
   }
+
+  /* Show only 8 lobsters on mobile (2 rows of 4) */
+  .lobsterCell:nth-child(n+9) {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {

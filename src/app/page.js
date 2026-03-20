@@ -26,6 +26,7 @@ export default function Home() {
         <PainPoints />
         <ParallaxDivider text="所以我們換了一種方式" variant="primary" />
         <Solution />
+        <EnterpriseSOP />
         <TemplateGallery />
         <VisualShowcase />
         <LobsterShowcase />
@@ -36,7 +37,6 @@ export default function Home() {
         <FAQ />
         <ParallaxDivider text="企業級方案" variant="enterprise" />
         <Enterprise />
-        <EnterpriseSOP />
       </main>
       <StickyBar />
       <MobileBottomBar />
