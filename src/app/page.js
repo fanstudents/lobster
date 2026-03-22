@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import PainPoints from '@/components/PainPoints';
 import Solution from '@/components/Solution';
+import LobsterDiagram from '@/components/LobsterDiagram';
 import TemplateGallery from '@/components/TemplateGallery';
 import VisualShowcase from '@/components/VisualShowcase';
 import LobsterShowcase from '@/components/LobsterShowcase';
@@ -25,6 +26,7 @@ export default function Home() {
         <PainPoints />
         <ParallaxDivider text="所以我們換了一種方式" variant="primary" />
         <Solution />
+        <LobsterDiagram />
         <EnterpriseSOP />
         <TemplateGallery />
         <VisualShowcase />
