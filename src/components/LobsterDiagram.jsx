@@ -34,197 +34,234 @@ export default function LobsterDiagram() {
         </div>
 
         <div className={`animate-in ${styles.diagramWrap}`}>
-          <svg viewBox="0 0 960 520" className={styles.svg} xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 1000 560" className={styles.svg} xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="db-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="hsl(25, 30%, 72%)" />
-                <stop offset="100%" stopColor="hsl(25, 30%, 58%)" />
+              {/* Gradients */}
+              <linearGradient id="dbBody" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#c9956a" />
+                <stop offset="100%" stopColor="#a07350" />
               </linearGradient>
-              <linearGradient id="db-top" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="hsl(25, 30%, 78%)" />
-                <stop offset="100%" stopColor="hsl(25, 30%, 70%)" />
+              <linearGradient id="dbTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ddb68a" />
+                <stop offset="100%" stopColor="#c9a070" />
               </linearGradient>
-              <linearGradient id="cube-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="hsl(220, 15%, 65%)" />
-                <stop offset="100%" stopColor="hsl(220, 15%, 52%)" />
+              <linearGradient id="cubeLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#7a8aa8" />
+                <stop offset="100%" stopColor="#5d6d8a" />
               </linearGradient>
-              <linearGradient id="cube-top" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="hsl(220, 15%, 75%)" />
-                <stop offset="100%" stopColor="hsl(220, 15%, 65%)" />
+              <linearGradient id="cubeRight" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#6a7998" />
+                <stop offset="100%" stopColor="#4e5e78" />
               </linearGradient>
-              <linearGradient id="pipe-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(8, 60%, 55%)" />
-                <stop offset="100%" stopColor="hsl(8, 55%, 50%)" />
+              <linearGradient id="cubeTopFace" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#9aabc5" />
+                <stop offset="100%" stopColor="#7a8fb0" />
               </linearGradient>
-              <linearGradient id="arrow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(8, 55%, 50%)" />
-                <stop offset="100%" stopColor="hsl(8, 60%, 55%)" />
+              <linearGradient id="pipeG" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#d45a3a" />
+                <stop offset="50%" stopColor="#e06848" />
+                <stop offset="100%" stopColor="#c94a2a" />
               </linearGradient>
-              <linearGradient id="person-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="hsl(25, 20%, 75%)" />
-                <stop offset="100%" stopColor="hsl(25, 20%, 62%)" />
+              <linearGradient id="outPipe" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#c94a2a" />
+                <stop offset="100%" stopColor="#d45a3a" />
               </linearGradient>
-              <filter id="dshadow">
-                <feDropShadow dx="1" dy="2" stdDeviation="3" floodOpacity="0.1" />
+              <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#ff6b4a" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#ff6b4a" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#6a9fff" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#6a9fff" stopOpacity="0" />
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+              <filter id="bigGlow">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+              <filter id="shadow3d">
+                <feDropShadow dx="2" dy="4" stdDeviation="6" floodColor="#2a1a10" floodOpacity="0.2" />
               </filter>
             </defs>
 
-            {/* ========== PHASE 1: Databases (Left) ========== */}
-            {/* Database 3 (top-right, 研發資料庫) */}
-            <g filter="url(#dshadow)">
-              <ellipse cx="195" cy="70" rx="38" ry="12" fill="url(#db-top)" />
-              <rect x="157" y="70" width="76" height="55" fill="url(#db-grad)" />
-              <ellipse cx="195" cy="125" rx="38" ry="12" fill="hsl(25, 30%, 55%)" />
-              {/* stripes */}
-              <line x1="161" y1="85" x2="229" y2="85" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-              <line x1="161" y1="100" x2="229" y2="100" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-              <line x1="161" y1="115" x2="229" y2="115" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-            </g>
-            <text x="195" y="155" textAnchor="middle" fontSize="12" fontWeight="600" fill="hsl(25, 25%, 40%)" fontFamily="system-ui, sans-serif">研發資料庫</text>
+            {/* ===== BACKGROUND GLOW ===== */}
+            <ellipse cx="500" cy="250" rx="420" ry="200" fill="url(#glowBlue)" opacity="0.15" />
 
-            {/* Database 2 (middle, 財務資料庫) */}
-            <g filter="url(#dshadow)">
-              <ellipse cx="115" cy="115" rx="38" ry="12" fill="url(#db-top)" />
-              <rect x="77" y="115" width="76" height="55" fill="url(#db-grad)" />
-              <ellipse cx="115" cy="170" rx="38" ry="12" fill="hsl(25, 30%, 55%)" />
-              <line x1="81" y1="130" x2="149" y2="130" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-              <line x1="81" y1="145" x2="149" y2="145" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-              <line x1="81" y1="160" x2="149" y2="160" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-            </g>
-            <text x="115" y="200" textAnchor="middle" fontSize="12" fontWeight="600" fill="hsl(25, 25%, 40%)" fontFamily="system-ui, sans-serif">財務資料庫</text>
-
-            {/* Database 1 (bottom-left, 人資資料庫) */}
-            <g filter="url(#dshadow)">
-              <ellipse cx="55" cy="170" rx="38" ry="12" fill="url(#db-top)" />
-              <rect x="17" y="170" width="76" height="55" fill="url(#db-grad)" />
-              <ellipse cx="55" cy="225" rx="38" ry="12" fill="hsl(25, 30%, 55%)" />
-              <line x1="21" y1="185" x2="89" y2="185" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-              <line x1="21" y1="200" x2="89" y2="200" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-              <line x1="21" y1="215" x2="89" y2="215" stroke="hsl(25, 25%, 65%)" strokeWidth="1" opacity="0.5" />
-            </g>
-            <text x="55" y="255" textAnchor="middle" fontSize="12" fontWeight="600" fill="hsl(25, 25%, 40%)" fontFamily="system-ui, sans-serif">人資資料庫</text>
-
-            {/* ========== Pipes (DB → Cube) ========== */}
-            <path d="M233 95 C290 95, 320 175, 380 175" stroke="url(#pipe-grad)" strokeWidth="8" fill="none" strokeLinecap="round" />
-            <path d="M153 140 C250 140, 300 175, 380 175" stroke="url(#pipe-grad)" strokeWidth="8" fill="none" strokeLinecap="round" />
-            <path d="M93 200 C200 200, 300 185, 380 185" stroke="url(#pipe-grad)" strokeWidth="8" fill="none" strokeLinecap="round" />
-            {/* Animated dots on pipes */}
-            <circle r="4" fill="hsl(8, 70%, 65%)">
-              <animateMotion dur="2.5s" repeatCount="indefinite" path="M233 95 C290 95, 320 175, 380 175" />
-            </circle>
-            <circle r="4" fill="hsl(8, 70%, 65%)">
-              <animateMotion dur="2.8s" repeatCount="indefinite" path="M153 140 C250 140, 300 175, 380 175" />
-            </circle>
-            <circle r="4" fill="hsl(8, 70%, 65%)">
-              <animateMotion dur="3s" repeatCount="indefinite" path="M93 200 C200 200, 300 185, 380 185" />
-            </circle>
-
-            {/* ========== PHASE 2: Processing Cube (Center) ========== */}
-            <g filter="url(#dshadow)">
-              {/* Cube - left face */}
-              <polygon points="400,120 480,80 480,260 400,300" fill="url(#cube-grad)" />
-              {/* Cube - right face */}
-              <polygon points="480,80 560,120 560,300 480,260" fill="hsl(220, 15%, 58%)" />
-              {/* Cube - top face */}
-              <polygon points="400,120 480,80 560,120 480,160" fill="url(#cube-top)" />
-              {/* Grid lines on left face */}
-              <line x1="420" y1="130" x2="420" y2="290" stroke="hsl(220, 15%, 60%)" strokeWidth="0.5" opacity="0.4" />
-              <line x1="440" y1="125" x2="440" y2="280" stroke="hsl(220, 15%, 60%)" strokeWidth="0.5" opacity="0.4" />
-              <line x1="460" y1="120" x2="460" y2="270" stroke="hsl(220, 15%, 60%)" strokeWidth="0.5" opacity="0.4" />
-              <line x1="405" y1="160" x2="478" y2="125" stroke="hsl(220, 15%, 60%)" strokeWidth="0.5" opacity="0.4" />
-              <line x1="405" y1="200" x2="478" y2="165" stroke="hsl(220, 15%, 60%)" strokeWidth="0.5" opacity="0.4" />
-              <line x1="405" y1="240" x2="478" y2="205" stroke="hsl(220, 15%, 60%)" strokeWidth="0.5" opacity="0.4" />
-              {/* Grid on right face */}
-              <line x1="500" y1="125" x2="500" y2="290" stroke="hsl(220, 12%, 55%)" strokeWidth="0.5" opacity="0.4" />
-              <line x1="520" y1="120" x2="520" y2="280" stroke="hsl(220, 12%, 55%)" strokeWidth="0.5" opacity="0.4" />
-              <line x1="540" y1="125" x2="540" y2="290" stroke="hsl(220, 12%, 55%)" strokeWidth="0.5" opacity="0.4" />
-            </g>
-
-            {/* Gear icon on cube */}
-            <g transform="translate(480, 190)">
-              <circle r="25" fill="none" stroke="hsl(220, 15%, 45%)" strokeWidth="2" opacity="0.6" />
-              <circle r="10" fill="none" stroke="hsl(220, 15%, 45%)" strokeWidth="2" opacity="0.6" />
-              {/* gear teeth */}
-              {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
-                const rad = (angle * Math.PI) / 180;
-                const x1 = Math.cos(rad) * 22;
-                const y1 = Math.sin(rad) * 22;
-                const x2 = Math.cos(rad) * 30;
-                const y2 = Math.sin(rad) * 30;
-                return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="hsl(220, 15%, 45%)" strokeWidth="4" strokeLinecap="round" opacity="0.6" />;
-              })}
-              {/* Rotating animation */}
-              <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="12s" repeatCount="indefinite" additive="sum" />
-            </g>
-
-            {/* ========== Pipes (Cube → People) ========== */}
-            <path d="M560 150 C620 150, 660 110, 720 100" stroke="url(#arrow-grad)" strokeWidth="6" fill="none" strokeLinecap="round" />
-            <path d="M560 190 C620 190, 660 170, 720 165" stroke="url(#arrow-grad)" strokeWidth="6" fill="none" strokeLinecap="round" />
-            <path d="M560 230 C620 230, 660 230, 720 230" stroke="url(#arrow-grad)" strokeWidth="6" fill="none" strokeLinecap="round" />
-            <path d="M560 260 C620 260, 660 280, 720 295" stroke="url(#arrow-grad)" strokeWidth="6" fill="none" strokeLinecap="round" />
-            {/* Arrowheads */}
-            <polygon points="720,95 732,100 720,105" fill="hsl(8, 55%, 52%)" />
-            <polygon points="720,160 732,165 720,170" fill="hsl(8, 55%, 52%)" />
-            <polygon points="720,225 732,230 720,235" fill="hsl(8, 55%, 52%)" />
-            <polygon points="720,290 732,295 720,300" fill="hsl(8, 55%, 52%)" />
-            {/* Animated dots */}
-            <circle r="3" fill="hsl(8, 70%, 65%)">
-              <animateMotion dur="2s" repeatCount="indefinite" path="M560 150 C620 150, 660 110, 720 100" />
-            </circle>
-            <circle r="3" fill="hsl(8, 70%, 65%)">
-              <animateMotion dur="2.3s" repeatCount="indefinite" path="M560 190 C620 190, 660 170, 720 165" />
-            </circle>
-            <circle r="3" fill="hsl(8, 70%, 65%)">
-              <animateMotion dur="2.6s" repeatCount="indefinite" path="M560 230 C620 230, 660 230, 720 230" />
-            </circle>
-            <circle r="3" fill="hsl(8, 70%, 65%)">
-              <animateMotion dur="2.9s" repeatCount="indefinite" path="M560 260 C620 260, 660 280, 720 295" />
-            </circle>
-
-            {/* ========== PHASE 3: People (Right) ========== */}
+            {/* ===== PHASE 1: DATABASES ===== */}
             {[
-              { x: 755, y: 80, label: '決策主管' },
-              { x: 755, y: 145, label: '部門經理' },
-              { x: 755, y: 210, label: '執行團隊' },
-              { x: 755, y: 275, label: '追蹤系統' },
-            ].map((p, i) => (
-              <g key={i} filter="url(#dshadow)">
-                {/* Desk/platform */}
-                <polygon
-                  points={`${p.x - 24},${p.y + 25} ${p.x},${p.y + 15} ${p.x + 50},${p.y + 25} ${p.x + 26},${p.y + 35}`}
-                  fill="url(#person-grad)"
-                />
-                {/* Person - body */}
-                <rect x={p.x - 2} y={p.y - 8} width="30" height="22" rx="3" fill="hsl(25, 20%, 68%)" />
-                {/* Person - head */}
-                <circle cx={p.x + 13} cy={p.y - 16} r="9" fill="hsl(25, 25%, 72%)" />
+              { x: 60, y: 160, label: '人資資料庫' },
+              { x: 130, y: 100, label: '財務資料庫' },
+              { x: 210, y: 50, label: '研發資料庫' },
+            ].map((db, i) => (
+              <g key={i} filter="url(#shadow3d)">
+                {/* Cylinder body */}
+                <rect x={db.x} y={db.y + 14} width="90" height="68" rx="2" fill="url(#dbBody)" />
+                {/* Top ellipse */}
+                <ellipse cx={db.x + 45} cy={db.y + 14} rx="45" ry="14" fill="url(#dbTop)" />
+                {/* Bottom ellipse */}
+                <ellipse cx={db.x + 45} cy={db.y + 82} rx="45" ry="14" fill="#8a6540" />
+                {/* Stripes */}
+                <line x1={db.x + 4} y1={db.y + 32} x2={db.x + 86} y2={db.y + 32} stroke="#b88a60" strokeWidth="1" opacity="0.5" />
+                <line x1={db.x + 4} y1={db.y + 50} x2={db.x + 86} y2={db.y + 50} stroke="#b88a60" strokeWidth="1" opacity="0.5" />
+                <line x1={db.x + 4} y1={db.y + 68} x2={db.x + 86} y2={db.y + 68} stroke="#b88a60" strokeWidth="1" opacity="0.5" />
+                {/* Highlight */}
+                <ellipse cx={db.x + 45} cy={db.y + 14} rx="35" ry="8" fill="white" opacity="0.08" />
                 {/* Label */}
-                <text x={p.x + 13} y={p.y + 52} textAnchor="middle" fontSize="11" fontWeight="600" fill="hsl(25, 25%, 40%)" fontFamily="system-ui, sans-serif">{p.label}</text>
+                <text x={db.x + 45} y={db.y + 112} textAnchor="middle" fontSize="13" fontWeight="700" fill="#6b4d35" fontFamily="system-ui, sans-serif">{db.label}</text>
               </g>
             ))}
 
-            {/* ========== Phase Labels ========== */}
-            <g fontFamily="system-ui, sans-serif">
-              {/* Phase 1 */}
-              <text x="130" y="310" textAnchor="middle" fontSize="18" fontWeight="800" fill="hsl(25, 30%, 35%)">1. 擷取 (Grasp)</text>
-              <text x="130" y="332" textAnchor="middle" fontSize="12" fontWeight="500" fill="hsl(25, 20%, 50%)">安全穿梭於人資、財務與</text>
-              <text x="130" y="350" textAnchor="middle" fontSize="12" fontWeight="500" fill="hsl(25, 20%, 50%)">研發的隔離資料庫。</text>
+            {/* ===== PIPES (DB → CUBE) ===== */}
+            {[
+              { path: 'M150 205 C260 205, 310 230, 380 230', delay: '0s' },
+              { path: 'M220 148 C300 148, 340 220, 380 220', delay: '0.4s' },
+              { path: 'M300 100 C360 100, 370 210, 390 210', delay: '0.8s' },
+            ].map((pipe, i) => (
+              <g key={i}>
+                {/* Pipe shadow */}
+                <path d={pipe.path} stroke="#2a1a10" strokeWidth="14" fill="none" strokeLinecap="round" opacity="0.08" transform="translate(2,3)" />
+                {/* Pipe body */}
+                <path d={pipe.path} stroke="url(#pipeG)" strokeWidth="12" fill="none" strokeLinecap="round" />
+                {/* Pipe highlight */}
+                <path d={pipe.path} stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.15" transform="translate(0,-3)" />
+                {/* Animated pulse */}
+                <circle r="6" fill="#ff8a60" filter="url(#glow)">
+                  <animateMotion dur="2.2s" repeatCount="indefinite" path={pipe.path} begin={pipe.delay} />
+                </circle>
+                <circle r="3" fill="white" opacity="0.9">
+                  <animateMotion dur="2.2s" repeatCount="indefinite" path={pipe.path} begin={pipe.delay} />
+                </circle>
+              </g>
+            ))}
 
-              {/* Phase 2 */}
-              <text x="480" y="335" textAnchor="middle" fontSize="18" fontWeight="800" fill="hsl(220, 20%, 35%)">2. 融合 (Synthesize)</text>
-              <text x="480" y="357" textAnchor="middle" fontSize="12" fontWeight="500" fill="hsl(220, 15%, 50%)">自動清理並無縫整合異質</text>
-              <text x="480" y="375" textAnchor="middle" fontSize="12" fontWeight="500" fill="hsl(220, 15%, 50%)">企業數據。</text>
+            {/* ===== PHASE 2: PROCESSING CUBE ===== */}
+            <g filter="url(#shadow3d)">
+              {/* Cube faces */}
+              <polygon points="420,100 520,50 520,310 420,360" fill="url(#cubeLeft)" />
+              <polygon points="520,50 620,100 620,360 520,310" fill="url(#cubeRight)" />
+              <polygon points="420,100 520,50 620,100 520,150" fill="url(#cubeTopFace)" />
+              
+              {/* Grid lines - left */}
+              {[140, 180, 220, 260, 300, 340].map((y, i) => (
+                <line key={`gl${i}`} x1="425" y1={y} x2="518" y2={y - 40} stroke="#8a9ab5" strokeWidth="0.6" opacity="0.25" />
+              ))}
+              {[450, 480].map((x, i) => (
+                <line key={`gv${i}`} x1={x} y1={110 + (x - 420) * 0.5} x2={x} y2={350 - (520 - x) * 0.1} stroke="#8a9ab5" strokeWidth="0.6" opacity="0.25" />
+              ))}
+              {/* Grid lines - right */}
+              {[140, 180, 220, 260, 300, 340].map((y, i) => (
+                <line key={`gr${i}`} x1="522" y1={y - 40} x2="618" y2={y} stroke="#7080a0" strokeWidth="0.6" opacity="0.25" />
+              ))}
+              {[560, 590].map((x, i) => (
+                <line key={`grv${i}`} x1={x} y1={100 + (x - 520) * 0.5} x2={x} y2={350 - (620 - x) * 0.1} stroke="#7080a0" strokeWidth="0.6" opacity="0.25" />
+              ))}
 
-              {/* Phase 3 */}
-              <text x="790" y="335" textAnchor="middle" fontSize="18" fontWeight="800" fill="hsl(8, 30%, 35%)">3. 輸出 (Act)</text>
-              <text x="790" y="357" textAnchor="middle" fontSize="12" fontWeight="500" fill="hsl(8, 20%, 50%)">自主生成戰略決策報告，</text>
-              <text x="790" y="375" textAnchor="middle" fontSize="12" fontWeight="500" fill="hsl(8, 20%, 50%)">並自動分派後續追蹤任務。</text>
+              {/* Edge highlights */}
+              <line x1="420" y1="100" x2="520" y2="50" stroke="white" strokeWidth="1" opacity="0.2" />
+              <line x1="520" y1="50" x2="620" y2="100" stroke="white" strokeWidth="1" opacity="0.15" />
             </g>
 
-            {/* ========== Bottom Tagline ========== */}
+            {/* Glow behind gear */}
+            <ellipse cx="520" cy="220" rx="60" ry="60" fill="url(#glowRed)" opacity="0.3" />
+
+            {/* Rotating gear */}
+            <g transform="translate(520, 220)">
+              <circle r="35" fill="none" stroke="#e8d5c0" strokeWidth="3" opacity="0.6" />
+              <circle r="14" fill="none" stroke="#e8d5c0" strokeWidth="3" opacity="0.6" />
+              <circle r="6" fill="#e8d5c0" opacity="0.4" />
+              {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle, i) => {
+                const rad = (angle * Math.PI) / 180;
+                const x1g = Math.cos(rad) * 30;
+                const y1g = Math.sin(rad) * 30;
+                const x2g = Math.cos(rad) * 42;
+                const y2g = Math.sin(rad) * 42;
+                return <line key={i} x1={x1g} y1={y1g} x2={x2g} y2={y2g} stroke="#e8d5c0" strokeWidth="6" strokeLinecap="round" opacity="0.5" />;
+              })}
+              <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="15s" repeatCount="indefinite" additive="sum" />
+            </g>
+
+            {/* Small 2nd gear */}
+            <g transform="translate(555, 260)">
+              <circle r="18" fill="none" stroke="#c5b5a0" strokeWidth="2" opacity="0.5" />
+              <circle r="7" fill="none" stroke="#c5b5a0" strokeWidth="2" opacity="0.5" />
+              {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
+                const rad = (angle * Math.PI) / 180;
+                return <line key={i} x1={Math.cos(rad) * 15} y1={Math.sin(rad) * 15} x2={Math.cos(rad) * 22} y2={Math.sin(rad) * 22} stroke="#c5b5a0" strokeWidth="4" strokeLinecap="round" opacity="0.4" />;
+              })}
+              <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="10s" repeatCount="indefinite" additive="sum" />
+            </g>
+
+            {/* ===== PIPES (CUBE → PEOPLE) ===== */}
+            {[
+              { path: 'M620 140 C680 135, 720 95, 770 90', y: 90 },
+              { path: 'M620 190 C680 185, 720 170, 770 165', y: 165 },
+              { path: 'M620 240 C680 240, 720 240, 770 240', y: 240 },
+              { path: 'M620 290 C680 295, 720 310, 770 315', y: 315 },
+            ].map((pipe, i) => (
+              <g key={i}>
+                <path d={pipe.path} stroke="#2a1a10" strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.06" transform="translate(2,3)" />
+                <path d={pipe.path} stroke="url(#outPipe)" strokeWidth="8" fill="none" strokeLinecap="round" />
+                <path d={pipe.path} stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.15" transform="translate(0,-2)" />
+                {/* Arrowhead */}
+                <polygon points={`770,${pipe.y - 7} 786,${pipe.y} 770,${pipe.y + 7}`} fill="#d45a3a" />
+                {/* Pulse */}
+                <circle r="5" fill="#ff8a60" filter="url(#glow)">
+                  <animateMotion dur="1.8s" repeatCount="indefinite" path={pipe.path} begin={`${i * 0.3}s`} />
+                </circle>
+                <circle r="2.5" fill="white" opacity="0.9">
+                  <animateMotion dur="1.8s" repeatCount="indefinite" path={pipe.path} begin={`${i * 0.3}s`} />
+                </circle>
+              </g>
+            ))}
+
+            {/* ===== PHASE 3: PEOPLE ===== */}
+            {[
+              { x: 800, y: 65, label: '決策主管' },
+              { x: 800, y: 140, label: '部門經理' },
+              { x: 800, y: 215, label: '執行團隊' },
+              { x: 800, y: 290, label: '追蹤系統' },
+            ].map((p, i) => (
+              <g key={i} filter="url(#shadow3d)">
+                {/* Platform */}
+                <polygon points={`${p.x - 10},${p.y + 38} ${p.x + 25},${p.y + 26} ${p.x + 70},${p.y + 38} ${p.x + 35},${p.y + 50}`} fill="#c5b5a0" />
+                <polygon points={`${p.x - 10},${p.y + 38} ${p.x - 10},${p.y + 46} ${p.x + 35},${p.y + 58} ${p.x + 35},${p.y + 50}`} fill="#a89880" />
+                <polygon points={`${p.x + 70},${p.y + 38} ${p.x + 70},${p.y + 46} ${p.x + 35},${p.y + 58} ${p.x + 35},${p.y + 50}`} fill="#b5a590" />
+                {/* Body */}
+                <rect x={p.x + 10} y={p.y + 2} width="40" height="28" rx="4" fill="#b8a898" />
+                <rect x={p.x + 14} y={p.y + 6} width="32" height="20" rx="3" fill="#c8baa8" opacity="0.5" />
+                {/* Head */}
+                <circle cx={p.x + 30} cy={p.y - 10} r="12" fill="#d0c0a8" />
+                <circle cx={p.x + 30} cy={p.y - 10} r="9" fill="#ddd0b8" opacity="0.4" />
+                {/* Label */}
+                <text x={p.x + 30} y={p.y + 72} textAnchor="middle" fontSize="13" fontWeight="700" fill="#6b5535" fontFamily="system-ui, sans-serif">{p.label}</text>
+              </g>
+            ))}
+
+            {/* ===== PHASE LABELS ===== */}
+            <g fontFamily="system-ui, sans-serif">
+              <text x="170" y="320" textAnchor="middle" fontSize="22" fontWeight="900" fill="#5a3a20">1. 擷取</text>
+              <text x="170" y="344" textAnchor="middle" fontSize="14" fontWeight="700" fill="#8a7060" letterSpacing="2">(Grasp)</text>
+              <text x="170" y="370" textAnchor="middle" fontSize="12" fontWeight="500" fill="#9a8a78">安全穿梭於人資、財務與</text>
+              <text x="170" y="390" textAnchor="middle" fontSize="12" fontWeight="500" fill="#9a8a78">研發的隔離資料庫。</text>
+
+              <text x="520" y="400" textAnchor="middle" fontSize="22" fontWeight="900" fill="#3a4a60">2. 融合</text>
+              <text x="520" y="424" textAnchor="middle" fontSize="14" fontWeight="700" fill="#6a7a90" letterSpacing="2">(Synthesize)</text>
+              <text x="520" y="450" textAnchor="middle" fontSize="12" fontWeight="500" fill="#7a8a98">自動清理並無縫整合異質</text>
+              <text x="520" y="470" textAnchor="middle" fontSize="12" fontWeight="500" fill="#7a8a98">企業數據。</text>
+
+              <text x="830" y="390" textAnchor="middle" fontSize="22" fontWeight="900" fill="#6a3a25">3. 輸出</text>
+              <text x="830" y="414" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9a6a50" letterSpacing="2">(Act)</text>
+              <text x="830" y="440" textAnchor="middle" fontSize="12" fontWeight="500" fill="#9a8070">自主生成戰略決策報告，</text>
+              <text x="830" y="460" textAnchor="middle" fontSize="12" fontWeight="500" fill="#9a8070">並自動分派後續追蹤任務。</text>
+            </g>
+
+            {/* ===== BOTTOM TAGLINE ===== */}
             <g>
-              <rect x="160" y="410" width="640" height="46" rx="23" fill="hsl(25, 15%, 94%)" stroke="hsl(25, 20%, 82%)" strokeWidth="1.5" />
-              <text x="480" y="439" textAnchor="middle" fontSize="14" fontWeight="700" fill="hsl(25, 30%, 32%)" fontFamily="system-ui, sans-serif">
+              <rect x="180" y="495" width="640" height="50" rx="25" fill="#f5ede5" stroke="#d5c5b0" strokeWidth="2" />
+              <text x="500" y="526" textAnchor="middle" fontSize="15" fontWeight="800" fill="#4a3020" fontFamily="system-ui, sans-serif">
                 價值主張：完美解決大型企業「資訊孤島」與「合規安全」痛點。
               </text>
             </g>
